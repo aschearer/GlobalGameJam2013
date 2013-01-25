@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="10" height="10" tilewidth="200" tileheight="200">
+ <tileset firstgid="1" name="Cave" tilewidth="200" tileheight="200">
+  <image source="../tilesets/Tiles.png" width="1000" height="1000"/>
+ </tileset>
+ <layer name="Cave" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjY2BgYCMCs6BhJixiIMwIxcjqmJDEYRhZHNk8VjTMiGQuLntZCbiPiUh1+MzDhlnxmIEcFoTMQ/YvAC6DAXo=
+  </data>
+ </layer>
+ <layer name="Goodies" width="10" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAN4CEgz0GEHi4cenGJ4wKcOPTjciM3HrN4sfDRzSfGTGQ+clgAAF5kAKA=
+  </data>
+ </layer>
+ <layer name="Fog" width="10" height="10" visible="0">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAOsKNhbGLYMC79lJg3EOrohQGRRwJG
+  </data>
+ </layer>
+</map>
