@@ -38,7 +38,6 @@ package heartattacks.doodads
 			
 			this.moveBy(Math.sin(this.heading) * .8, Math.cos(this.heading) * -.8, "level");
 		}
-		
 	}
 
 }
