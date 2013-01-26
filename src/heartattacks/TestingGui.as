@@ -29,18 +29,9 @@ package heartattacks
 			this.height = 200;
 			
 			this.AddSlider(
-				"Camera Speed",
-				10,
-				10,
-				0.1,
-				2,
-				this.state.CameraSpeed,
-				this.OnCameraSpeed);
-			
-			this.AddSlider(
 				"Movement Speed",
 				10,
-				30,
+				10,
 				0.2,
 				3,
 				this.player.MovementSpeed,
@@ -49,7 +40,7 @@ package heartattacks
 			this.AddSlider(
 				"Turning Speed",
 				10,
-				50,
+				30,
 				100,
 				500,
 				600 - this.player.TurningSpeed,
@@ -58,7 +49,7 @@ package heartattacks
 			this.AddSlider(
 				"Heartrate",
 				10,
-				70,
+				50,
 				10 / 60,
 				140 / 60,
 				this.player.HeartRate,
@@ -67,7 +58,7 @@ package heartattacks
 				this.AddSlider(
 				"Score per Beat",
 				10,
-				90,
+				70,
 				1,
 				1000,
 				this.player.ScorePerBeat,
@@ -76,25 +67,16 @@ package heartattacks
 			this.AddSlider(
 				"Speed Bonus",
 				10,
-				110,
+				90,
 				2,
 				10,
 				this.player.SpeedBonus,
 				this.OnSpeedBonus);
-			
-			this.AddSlider(
-				"Girl Speed",
-				10,
-				130,
-				0.2,
-				3,
-				this.girl.MovementSpeed,
-				this.OnGirlSpeed);
 				
 			this.AddSlider(
 				"Trail Width",
 				10,
-				150,
+				110,
 				10,
 				60,
 				this.girl.TrailWidth,
@@ -103,7 +85,7 @@ package heartattacks
 			this.AddSlider(
 				"Trail Length",
 				10,
-				170,
+				130,
 				40,
 				440,
 				this.girl.TrailLength,

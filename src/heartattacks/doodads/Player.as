@@ -18,10 +18,10 @@ package heartattacks.doodads
 	{
 		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
 		
-		private var MouseControlsEnabled:Boolean = false;
+		private var MouseControlsEnabled:Boolean = true;
 		private var ArrowControlsEnabled:Boolean = false;
 		
-		public var MovementSpeed:Number = -1;
+		public var MovementSpeed:Number = 2;
 		public var TurningSpeed:Number = 128;
 		public var SpeedBonus:Number = 4;
 		public var CurrentScore:uint = 0;
@@ -30,7 +30,7 @@ package heartattacks.doodads
 		
 		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;
-		private var heading:Number;
+		private var heading:Number = Math.PI / 2;
 		private var radius:Number = 100;
 		private var girl:Girl;
 		
@@ -38,7 +38,7 @@ package heartattacks.doodads
 		{
 			super(x, y);
 			this.girl = girl;
-			this.heading = 0;
+			this.heading = Math.PI / 2;
 			this.spritemap = new Spritemap(PlayerImage, 128, 128);
 			this.spritemap.add("walk-forward", [13, 14, 15, 16], 12, true);
 			this.spritemap.add("walk-side", [18,19,20,21], 12, true);
@@ -46,6 +46,14 @@ package heartattacks.doodads
 			this.spritemap.play("walk-forward");
 			this.setHitbox(128, 128);
 			this.layer = 2;
+		}
+		
+		override public function render():void
+		{
+			super.render();
+			var dx:Number = centerX + Math.cos(this.heading) * 100;
+			var dy:Number = centerY + Math.sin(this.heading) * 100;
+			Draw.line(this.centerX, this.centerY, dx, dy);
 		}
 		
 		override public function update():void
@@ -72,17 +80,14 @@ package heartattacks.doodads
 			}
 			
 			var currentSpeed:Number = this.MovementSpeed;
-			
-			if (this.isInGirlsTrail())
-			{
-				currentSpeed *= -1;
-			}
+			var sign:Number = this.isInGirlsTrail() ? 1 : -1;
 			
 			var playerDistanceFromCenter:Number = FP.halfHeight - this.centerY;
+			var playerSpeed:Number = playerDistanceFromCenter / FP.halfHeight * currentSpeed;
 			var girlDistanceFromCenter:Number = FP.halfHeight - this.girl.centerY;
-			//this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * currentSpeed, "level");
-			this.moveBy(0, playerDistanceFromCenter / FP.halfHeight * currentSpeed, "level");
-			this.girl.moveBy(0, girlDistanceFromCenter / FP.halfHeight * currentSpeed, "level");
+			var girlSpeed:Number = girlDistanceFromCenter / FP.halfHeight * currentSpeed;
+			this.moveBy(Math.cos(this.heading) * playerSpeed, sign * Math.sin(this.heading) * playerSpeed, "level");
+			this.girl.moveBy(0, sign * girlSpeed, "level");
 			//FP.camera.y += currentSpeed * 1.5;
 		}
 		
@@ -101,14 +106,14 @@ package heartattacks.doodads
 		{
 			if (Input.mouseDown && Input.mouseX)
 			{
-				var deltaX:Number = Input.mouseX < this.x ? -1 : 1;
+				var deltaX:Number = Input.mouseX < this.x ? 1 : -1;
 				this.heading += deltaX * Math.PI / this.TurningSpeed;
-				if (this.heading > Math.PI / 6)
+				if (this.heading < Math.PI / 2 - Math.PI / 6)
 				{
 					this.spritemap.flipped = false;
 					this.spritemap.play("walk-side");
 				}
-				else if (this.heading < -Math.PI / 6)
+				else if (this.heading > Math.PI / 2 + Math.PI / 6)
 				{
 					this.spritemap.flipped = true;
 					this.spritemap.play("walk-side");
