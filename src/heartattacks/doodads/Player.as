@@ -12,7 +12,10 @@ package heartattacks.doodads
 	 
 	public class Player extends Entity
 	{
-		[Embed(source = "../../../res/spritesheets/Sheet.png")] protected var PlayerImage:Class;
+		[Embed(source = "../../../res/spritesheets/Sheet.png")] private var PlayerImage:Class;
+		
+		private const Speed:Number = 0.8;
+		private const Torque:Number = 128;
 		
 		private var spritemap:Spritemap;
 		private var heading:Number;
@@ -33,10 +36,10 @@ package heartattacks.doodads
 			if (Input.mouseDown && Input.mouseX)
 			{
 				var deltaX:Number = Input.mouseX < this.x ? -1 : 1;
-				this.heading += deltaX * Math.PI / 128;
+				this.heading += deltaX * Math.PI / Torque;
 			}
 			
-			this.moveBy(Math.sin(this.heading) * .8, Math.cos(this.heading) * -.8, "level");
+			this.moveBy(Math.sin(this.heading) * Speed, Math.cos(this.heading) * -Speed, "level");
 		}
 	}
 
