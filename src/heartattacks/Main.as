@@ -15,6 +15,7 @@ package heartattacks
 		public function Main():void 
 		{
 			super(800, 600, PlayState);
+			this.forceDebugger = true;
 		}
 	}
 }
