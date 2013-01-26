@@ -1,45 +1,42 @@
 package heartattacks.doodads 
 {
-	import org.flixel.*;
+	import net.flashpunk.Entity;
+	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Spritemap;
+	import net.flashpunk.utils.Input
 
 	/**
 	 * ...
 	 * @author The Heart Attacks
 	 */
 	 
-	public class Player extends FlxSprite
+	public class Player extends Entity
 	{
-		[Embed(source = "../../../res/spritesheets/Sheet.png")] protected var playerImage:Class;
+		[Embed(source = "../../../res/spritesheets/Sheet.png")] protected var PlayerImage:Class;
 		
+		private var spritemap:Spritemap;
+		private var heading:Number;
 		
 		public function Player(x:Number, y:Number ) 
 		{
 			super(x, y);
-			this.loadGraphic(playerImage, true, true, 25, 29, true);
-			
-			addAnimation("walk", [0, 1, 0], 8, false );
-			
+			this.heading = 0;
+			this.spritemap = new Spritemap(PlayerImage, 25, 29);
+			this.spritemap.add("walk", [0, 1], 4, true);
+			this.graphic = this.spritemap;
+			this.spritemap.play("walk");
+			this.setHitbox(25, 29);
 		}
 		
 		override public function update():void
 		{
-			this.y -= 0.9;
-			play("walk");
-			
-
-				
-			if (FlxG.keys.D || FlxG.keys.RIGHT)
+			if (Input.mouseDown && Input.mouseX)
 			{
-				this.x += 0.9
-				play("walk");
+				var deltaX:Number = Input.mouseX < this.x ? -1 : 1;
+				this.heading += deltaX * Math.PI / 128;
 			}
 			
-			if (FlxG.keys.A || FlxG.keys.LEFT)
-			{
-				this.x -= 0.9
-				play("walk");
-			}
-          
+			this.moveBy(Math.sin(this.heading) * .8, Math.cos(this.heading) * -.8, "level");
 		}
 		
 	}

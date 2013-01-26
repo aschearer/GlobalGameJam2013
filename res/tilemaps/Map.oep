@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <OgmoVersion>2.1.0.5</OgmoVersion>
+  <Name>Test Map</Name>
+  <BackgroundColor A="255" R="125" G="160" B="255" />
+  <GridColor A="255" R="255" G="240" B="90" />
+  <LevelDefaultSize>
+    <Width>800</Width>
+    <Height>600</Height>
+  </LevelDefaultSize>
+  <LevelMinimumSize>
+    <Width>800</Width>
+    <Height>600</Height>
+  </LevelMinimumSize>
+  <LevelMaximumSize>
+    <Width>800</Width>
+    <Height>6800</Height>
+  </LevelMaximumSize>
+  <Filename>C:\Users\Alex\Documents\GitHub\GlobalGameJam2013\res\tilemaps\Map.oep</Filename>
+  <AngleMode>Radians</AngleMode>
+  <CameraEnabled>true</CameraEnabled>
+  <CameraSize>
+    <Width>800</Width>
+    <Height>600</Height>
+  </CameraSize>
+  <ExportCameraPosition>false</ExportCameraPosition>
+  <LevelValueDefinitions />
+  <LayerDefinitions>
+    <LayerDefinition xsi:type="TileLayerDefinition">
+      <Name>Layer1</Name>
+      <Grid>
+        <Width>50</Width>
+        <Height>50</Height>
+      </Grid>
+      <ScrollFactor>
+        <X>1</X>
+        <Y>1</Y>
+      </ScrollFactor>
+      <ExportMode>XML</ExportMode>
+    </LayerDefinition>
+  </LayerDefinitions>
+  <Tilesets>
+    <Tileset>
+      <Name>TestTiles</Name>
+      <FilePath>..\tilesets\Tiles.png</FilePath>
+      <TileSize>
+        <Width>50</Width>
+        <Height>50</Height>
+      </TileSize>
+      <TileSep>0</TileSep>
+    </Tileset>
+  </Tilesets>
+  <EntityDefinitions />
+</project>

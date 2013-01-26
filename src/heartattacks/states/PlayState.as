@@ -4,44 +4,38 @@ package heartattacks.states
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import heartattacks.doodads.Player;
-	import net.pixelpracht.tmx.TmxMap;
-	import org.flixel.FlxSprite;
-	import org.flixel.FlxState;
-	import org.flixel.FlxText;
-	import org.flixel.FlxTilemap;
-	import org.flixel.FlxObject;
-	import org.flixel.FlxG;
+	import heartattacks.Level;
+	import net.flashpunk.graphics.Tilemap;
+	import net.flashpunk.masks.Grid;
+	import net.flashpunk.World;
 	
 	/**
 	 * ...
 	 * @author The Heart Attacks
 	 */
-	public class PlayState extends FlxState
+	public class PlayState extends World
 	{
 		[Embed(source = "../../../res/tilesets/Tiles.png")]
 		private var MapImage:Class;
 		
-		[Embed(source = "../../../res/tilemaps/Map.txt", mimeType = "application/octet-stream")]
+		[Embed(source = "../../../res/tilemaps/TestLevel.oel", mimeType = "application/octet-stream")]
 		private var Map:Class;
 		
 		private var player:Player;
-		private var level:FlxTilemap;
+		private var level:Level;
 		
-		override public function create():void
+		public function PlayState()
 		{
-			this.add(new FlxText(100, 100, 100, "Hello World!"));
-			this.player = new Player(300, 400);
+			this.player = new Player(300, 500);
 		    this.add(this.player);
-
-			this.level = new FlxTilemap();
-			this.level.loadMap(new Map(), MapImage, 50, 50);
+			
+			this.level = new Level(MapImage, Map);
 			this.add(this.level);
 		}
 		
 		override public function update():void
 		{
 			super.update();
-			FlxG.collide(this.level, this.player);
 		}
 	}
 }
