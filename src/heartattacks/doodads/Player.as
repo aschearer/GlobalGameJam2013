@@ -15,7 +15,7 @@ package heartattacks.doodads
 	 
 	public class Player extends Entity
 	{
-		[Embed(source = "../../../res/spritesheets/Sheet.png")] private var PlayerImage:Class;
+		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
 		
 		private var MouseControlsEnabled:Boolean = true;
 		private var ArrowControlsEnabled:Boolean = false;
@@ -34,11 +34,12 @@ package heartattacks.doodads
 			super(x, y);
 			this.girl = girl;
 			this.heading = 0;
-			this.spritemap = new Spritemap(PlayerImage, 25, 29);
-			this.spritemap.add("walk", [0, 1], 4, true);
+			this.spritemap = new Spritemap(PlayerImage, 128, 128);
+			this.spritemap.add("walk-forward", [13, 14, 15, 16], 12, true);
+			this.spritemap.add("walk-side", [18,19,20,21], 12, true);
 			this.graphic = this.spritemap;
-			this.spritemap.play("walk");
-			this.setHitbox(25, 29);
+			this.spritemap.play("walk-forward");
+			this.setHitbox(128, 128);
 			this.layer = 2;
 		}
 		
@@ -64,8 +65,7 @@ package heartattacks.doodads
 				currentSpeed *= this.SpeedBonus;
 			}
 			
-			this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * currentSpeed, "level");
-			this.spritemap.angle = this.heading * 180 / Math.PI;
+			this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * currentSpeed, "level");			
 		}
 		
 		private function isInGirlsTrail():Boolean
@@ -85,6 +85,21 @@ package heartattacks.doodads
 			{
 				var deltaX:Number = Input.mouseX < this.x ? -1 : 1;
 				this.heading += deltaX * Math.PI / this.TurningSpeed;
+				if (this.heading > Math.PI / 6)
+				{
+					this.spritemap.flipped = false;
+					this.spritemap.play("walk-side");
+				}
+				else if (this.heading < -Math.PI / 6)
+				{
+					this.spritemap.flipped = true;
+					this.spritemap.play("walk-side");
+				}
+				else
+				{
+					this.spritemap.flipped = false;
+					this.spritemap.play("walk-forward");
+				}
 			}
 		}
 		
