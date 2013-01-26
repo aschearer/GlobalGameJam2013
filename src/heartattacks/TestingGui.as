@@ -24,7 +24,7 @@ package heartattacks
 			this.girl = girl;
 			
 			this.width = 240;
-			this.height = 200;
+			this.height = 220;
 			
 			this.AddSlider(
 				"Movement Speed",
@@ -99,13 +99,22 @@ package heartattacks
 				this.OnLaneChange);
 				
 			this.AddSlider(
-				"Camera Speed",
+				"Min Camera Speed",
 				10,
 				170,
-				1,
+				0,
 				4,
-				this.player.CameraSpeed,
+				this.player.MinCameraSpeed,
 				this.OnCameraSpeed);
+				
+			this.AddSlider(
+				"Max Camera Speed",
+				10,
+				190,
+				1,
+				10,
+				this.player.MaxCameraSpeed,
+				this.OnMaxCameraSpeed);
 		}
 		
 		private function AddSlider(label:String, x:int, y:int, min:Number, max:Number, current:Number, handler:Function):void
@@ -168,7 +177,13 @@ package heartattacks
 		private function OnCameraSpeed(e:Event):void
 		{
 			var slider:HUISlider = HUISlider(e.target);
-			this.player.CameraSpeed = slider.value;
+			this.player.MinCameraSpeed = slider.value;
+		}
+		
+		private function OnMaxCameraSpeed(e:Event):void
+		{
+			var slider:HUISlider = HUISlider(e.target);
+			this.player.MaxCameraSpeed  = slider.value;
 		}
 		
 		private function OnLaneChange(e:Event):void

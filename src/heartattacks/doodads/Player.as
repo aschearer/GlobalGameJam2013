@@ -27,7 +27,8 @@ package heartattacks.doodads
 		public var CurrentScore:uint = 0;
 		public var HeartRate:Number = 60 / 60;
 		public var ScorePerBeat:int = 100;
-		public var CameraSpeed:Number = 1.5;
+		public var MinCameraSpeed:Number = 1;
+		public var MaxCameraSpeed:Number = 6;
 		
 		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;
@@ -92,7 +93,13 @@ package heartattacks.doodads
 			var girlSpeed:Number = girlDistanceFromCenter / FP.halfHeight * currentSpeed;
 			this.moveBy(Math.cos(this.heading) * playerSpeed, sign * Math.sin(this.heading) * playerSpeed, "level");
 			this.girl.moveBy(0, sign * girlSpeed, "level");
-			FP.camera.y += currentSpeed * this.CameraSpeed;
+			
+			var distanceToGirl:Number = Math.pow(this.girl.x - this.x, 2) + Math.pow(this.girl.y - this.y, 2);
+			var totalDistance:Number = FP.height * FP.height;
+			var percentToGirl:Number = Math.min(1, Math.max(0, (totalDistance - distanceToGirl) / totalDistance));
+			var deltaSpeed:Number = this.MaxCameraSpeed - this.MinCameraSpeed;
+			
+			FP.camera.y += currentSpeed * ((deltaSpeed * percentToGirl) + this.MinCameraSpeed);
 			this.graphic.scrollY = 0;
 			this.girl.graphic.scrollY = 0;
 			this.heart.x = this.x;
