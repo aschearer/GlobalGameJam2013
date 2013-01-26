@@ -54,7 +54,6 @@ package heartattacks.doodads
 		{
 			this.timeSinceLastMove += 1 / 60;
 			var bonusModifier:Number = 1 - .1 * this.percentageToBoy;
-			trace(bonusModifier);
 			if (this.timeSinceLastMove >= this.TimeTillNextMove * bonusModifier)
 			{
 				var column:int = this.pickNewColumn();
