@@ -2,6 +2,7 @@ package heartattacks
 {
 	import flash.utils.ByteArray;
 	import heartattacks.doodads.Girl;
+	import heartattacks.doodads.HeartMeter;
 	import heartattacks.doodads.Player;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Tilemap;
@@ -19,6 +20,7 @@ package heartattacks
 		public var levelHeight:Number;
 		public var player:Player;
 		public var girl:Girl;
+		public var heart:HeartMeter;
 		public var numColumns:int;
 		public var numRows:int;
 		public var gutterLeft:int = 4;
@@ -27,7 +29,8 @@ package heartattacks
 		public function Level(tileset:Class, levelData:Class)
 		{
 			this.girl = new Girl(this);
-			this.player = new Player(this.girl);
+			this.heart = new HeartMeter();
+			this.player = new Player(this.girl, this.heart);
 			var level:XML = new XML(new levelData());
 			this.tiles = new Tilemap(tileset, level.@width, level.@height, tileSize, tileSize);
 			this.graphic = this.tiles;

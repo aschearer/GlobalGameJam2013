@@ -4,6 +4,7 @@ package heartattacks.states
 	import flash.geom.Point;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
+	import heartattacks.doodads.HeartMeter;
 	import heartattacks.doodads.Player;
 	import heartattacks.doodads.Girl;
 	import heartattacks.Level;
@@ -32,28 +33,24 @@ package heartattacks.states
 		[Embed(source = "../../../res/tilemaps/TestLevel.oel", mimeType = "application/octet-stream")]
 		private var Map:Class;
 		private var level:Level;
-		private var scoreLabel:Text;
 		private var testGui:TestingGui;
 		
 		public override function begin():void
 		{
-			this.createLevel(null);
+			this.createLevel(null, null);
 		}
 		
 		override public function update():void
 		{
 			super.update();
-			this.scoreLabel.scrollX = 0;
-			this.scoreLabel.scrollY = 0;
-			this.scoreLabel.x = FP.width - this.scoreLabel.width - 10;
-			this.scoreLabel.text = "Score: " + this.level.player.CurrentScore;
 			
 			if (Input.pressed(Key.F5))
 			{
 				FP.stage.removeChild(this.testGui);
 				var oldPlayer:Player = this.level.player;
+				var oldGirl:Girl = this.level.girl;
 				this.removeAll();
-				this.createLevel(oldPlayer);
+				this.createLevel(oldPlayer, oldGirl);
 			}
 		}
 		
@@ -72,16 +69,15 @@ package heartattacks.states
 			return obstacle != null;
 		}
 		
-		private function createLevel(oldPlayer:Player):void
+		private function createLevel(oldPlayer:Player, oldGirl:Girl):void
 		{
 			this.camera.x = 0;
 			this.camera.y = 0;
 			this.level = new Level(MapImage, Map);
+			this.add(this.level.heart);
 			this.add(this.level.player);
 			this.add(this.level.girl);
 			this.add(this.level);
-			this.scoreLabel = new Text("Score: 0", FP.width - 100, 10);
-			this.addGraphic(this.scoreLabel);
 			if (oldPlayer != null)
 			{
 				this.level.player.MovementSpeed = oldPlayer.MovementSpeed;
@@ -90,6 +86,7 @@ package heartattacks.states
 				this.level.player.HeartRate = oldPlayer.HeartRate;
 				this.level.player.ScorePerBeat = oldPlayer.ScorePerBeat;
 				this.level.player.CameraSpeed = oldPlayer.CameraSpeed;
+				this.level.girl.TimeTillNextMove = oldGirl.TimeTillNextMove;
 			}
 			
 			this.testGui = new TestingGui(this.level.player, this.level.girl);

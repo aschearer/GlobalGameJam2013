@@ -25,7 +25,7 @@ package heartattacks.doodads
 		public var TurningSpeed:Number = 128;
 		public var SpeedBonus:Number = 4;
 		public var CurrentScore:uint = 0;
-		public var HeartRate:Number = 70 / 60;
+		public var HeartRate:Number = 60 / 60;
 		public var ScorePerBeat:int = 100;
 		public var CameraSpeed:Number = 1.5;
 		
@@ -34,11 +34,13 @@ package heartattacks.doodads
 		private var heading:Number = Math.PI / 2;
 		private var radius:Number = 100;
 		private var girl:Girl;
+		private var heart:HeartMeter;
 		
-		public function Player(girl:Girl) 
+		public function Player(girl:Girl, heart:HeartMeter) 
 		{
 			super(0, 0);
 			this.girl = girl;
+			this.heart = heart;
 			this.heading = Math.PI / 2;
 			this.spritemap = new Spritemap(PlayerImage, 128, 128);
 			this.spritemap.add("walk-forward", [13, 14, 15, 16], 12, true);
@@ -64,6 +66,7 @@ package heartattacks.doodads
 			{
 				this.timeTillNextHeartBeat -= this.HeartRate;
 				this.CurrentScore += this.ScorePerBeat;
+				this.heart.beat(0.5);
 			}
 			
 			if (Input.pressed(Key.SPACE))
@@ -92,6 +95,9 @@ package heartattacks.doodads
 			FP.camera.y += currentSpeed * this.CameraSpeed;
 			this.graphic.scrollY = 0;
 			this.girl.graphic.scrollY = 0;
+			this.heart.x = this.x;
+			this.heart.y = this.y - 40;
+			this.heart.graphic.scrollY = 0;
 		}
 		
 		private function isInGirlsTrail():Boolean
