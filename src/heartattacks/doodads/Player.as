@@ -23,7 +23,11 @@ package heartattacks.doodads
 		public var MovementSpeed:Number = 0.8;
 		public var TurningSpeed:Number = 128;
 		public var SpeedBonus:Number = 2;
+		public var CurrentScore:uint = 0;
+		public var HeartRate:Number = 70 / 60;
+		public var ScorePerBeat:int = 100;
 		
+		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;
 		private var heading:Number;
 		private var radius:Number = 100;
@@ -45,6 +49,13 @@ package heartattacks.doodads
 		
 		override public function update():void
 		{
+			this.timeTillNextHeartBeat += 1 / 60;
+			if (this.timeTillNextHeartBeat >= this.HeartRate)
+			{
+				this.timeTillNextHeartBeat -= this.HeartRate;
+				this.CurrentScore += this.ScorePerBeat;
+			}
+			
 			if (Input.pressed(Key.SPACE))
 			{
 				ArrowControlsEnabled = !ArrowControlsEnabled;

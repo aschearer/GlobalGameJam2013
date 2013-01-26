@@ -32,6 +32,7 @@ package heartattacks.states
 		private var girl:Girl;
 		private var player:Player;
 		private var level:Level;
+		private var scoreLabel:Text;
 		
 		public function PlayState()
 		{
@@ -41,6 +42,8 @@ package heartattacks.states
 			this.add(this.player);
 			this.level = new Level(MapImage, Map, this.player, this.girl);
 			this.add(this.level);
+			this.scoreLabel = new Text("Score: 0", FP.width - 100, 10);
+			this.addGraphic(this.scoreLabel);
 		}
 		
 		public override function begin():void
@@ -52,6 +55,10 @@ package heartattacks.states
 		{
 			super.update();
 			this.cameraMove();
+			this.scoreLabel.scrollX = 0;
+			this.scoreLabel.scrollY = 0;
+			this.scoreLabel.x = FP.width - this.scoreLabel.width - 10;
+			this.scoreLabel.text = "Score: " + this.player.CurrentScore;
 		}
 		
 		private function CanGirlSeePlayer():Boolean

@@ -44,9 +44,27 @@ package heartattacks
 				this.OnTurningSpeed);
 				
 			this.AddSlider(
-				"Speed Bonus",
+				"Heartrate",
 				10,
 				50,
+				10 / 60,
+				140 / 60,
+				this.player.HeartRate,
+				this.OnHeartRate);
+				
+				this.AddSlider(
+				"Score per Beat",
+				10,
+				70,
+				1,
+				1000,
+				this.player.ScorePerBeat,
+				this.OnScorePerBeat);
+				
+			this.AddSlider(
+				"Speed Bonus",
+				10,
+				90,
 				2,
 				10,
 				this.player.SpeedBonus,
@@ -55,7 +73,7 @@ package heartattacks
 			this.AddSlider(
 				"Trail Width",
 				10,
-				70,
+				110,
 				10,
 				60,
 				this.girl.TrailWidth,
@@ -64,7 +82,7 @@ package heartattacks
 			this.AddSlider(
 				"Trail Length",
 				10,
-				90,
+				130,
 				40,
 				440,
 				this.girl.TrailLength,
@@ -90,6 +108,18 @@ package heartattacks
 		{
 			var slider:HUISlider = HUISlider(e.target);
 			this.player.SpeedBonus = slider.value;
+		}
+		
+		private function OnHeartRate(e:Event):void
+		{
+			var slider:HUISlider = HUISlider(e.target);
+			this.player.HeartRate = slider.value;
+		}
+		
+		private function OnScorePerBeat(e:Event):void
+		{
+			var slider:HUISlider = HUISlider(e.target);
+			this.player.ScorePerBeat = slider.value;
 		}
 		
 		private function OnTurningSpeed(e:Event):void
