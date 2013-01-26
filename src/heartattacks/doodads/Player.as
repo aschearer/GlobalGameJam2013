@@ -5,6 +5,7 @@ package heartattacks.doodads
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input
 	import net.flashpunk.utils.Key;
+	import net.flashpunk.utils.Draw
 
 	/**
 	 * ...
@@ -22,7 +23,7 @@ package heartattacks.doodads
 		
 		private var spritemap:Spritemap;
 		private var heading:Number;
-		private var radius:Number = 30;
+		private var radius:Number = 100;
 		private var girl:Girl;
 		
 		public function Player(x:Number, y:Number, girl:Girl) 
@@ -36,7 +37,6 @@ package heartattacks.doodads
 			this.spritemap.play("walk");
 			this.setHitbox(25, 29);
 			this.layer = 2;
-			
 		}
 		
 		override public function update():void
@@ -57,7 +57,7 @@ package heartattacks.doodads
 		{
 			var currentSpeed:Number = Speed;
 			var distanceToGirl:Number = Math.sqrt(Math.pow((girl.x - this.x), 2) + Math.pow((girl.y - this.y), 2));
-			if (distanceToGirl < 25)
+			if (distanceToGirl < this.radius)
 			{
 				currentSpeed *= 2;
 			}
@@ -68,7 +68,13 @@ package heartattacks.doodads
 				this.heading += deltaX * Math.PI / Torque;
 			}
 			
-			this.moveBy(Math.sin(this.heading) * Speed, Math.cos(this.heading) * -Speed, "level");
+			this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * -currentSpeed, "level");
+		}
+		
+		public override function render():void
+		{
+			super.render();
+			Draw.circle(this.girl.centerX, this.girl.centerY, this.radius);
 		}
 		
 		private function processArrowControls():void
