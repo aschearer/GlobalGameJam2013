@@ -34,8 +34,6 @@ package heartattacks.states
 		private var level:Level;
 		private var scoreLabel:Text;
 		
-		public var CameraSpeed:Number = 1;
-		
 		public function PlayState()
 		{
 			this.girl = new Girl(300, 500);
@@ -50,7 +48,7 @@ package heartattacks.states
 		
 		public override function begin():void
 		{
-			FP.stage.addChild(new TestingGui(this, this.player, this.girl));
+			FP.stage.addChild(new TestingGui(this.player, this.girl));
 		}
 		
 		override public function update():void

@@ -17,13 +17,11 @@ package heartattacks
 		private var movementSpeedSlider:HUISlider;
 		private var player:Player;
 		private var girl:Girl;
-		private var state:PlayState;
 		
-		public function TestingGui(state:PlayState, player:Player, girl:Girl) 
+		public function TestingGui(player:Player, girl:Girl) 
 		{
 			this.player = player;
 			this.girl = girl;
-			this.state = state;
 			
 			this.width = 240;
 			this.height = 200;
@@ -90,6 +88,15 @@ package heartattacks
 				440,
 				this.girl.TrailLength,
 				this.OnTrailLength);
+				
+			this.AddSlider(
+				"Camera Speed",
+				10,
+				150,
+				1,
+				4,
+				this.player.CameraSpeed,
+				this.OnCameraSpeed);
 		}
 		
 		private function AddSlider(label:String, x:int, y:int, min:Number, max:Number, current:Number, handler:Function):void
@@ -152,7 +159,7 @@ package heartattacks
 		private function OnCameraSpeed(e:Event):void
 		{
 			var slider:HUISlider = HUISlider(e.target);
-			this.state.CameraSpeed = slider.value;
+			this.player.CameraSpeed = slider.value;
 		}
 	}
 }
