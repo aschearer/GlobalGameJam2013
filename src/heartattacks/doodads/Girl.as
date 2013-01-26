@@ -14,6 +14,7 @@ package heartattacks.doodads
 	{
 		public var TrailLength:Number = 200;
 		public var TrailWidth:Number;
+		public var MovementSpeed:Number = 0.6;
 		
 		[Embed(source = "../../../res/spritesheets/Cat.png")] protected var girlImage:Class;
 		private var spritemap:Spritemap;
@@ -21,7 +22,6 @@ package heartattacks.doodads
 		public function Girl(x:Number, y:Number) 
 		{
 			super(x, y);
-			//this.heading = 0;
 			this.spritemap = new Spritemap(girlImage, 25, 25);
 			this.spritemap.add("walk", [0, 1], 4, true);
 			this.graphic = this.spritemap;
@@ -42,7 +42,7 @@ package heartattacks.doodads
 		override public function update():void 
 		{
 			super.update();
-			this.moveBy(0, 0.3, "level" );
+			this.moveBy(0, this.MovementSpeed, "level" );
 			
 		}
 	}

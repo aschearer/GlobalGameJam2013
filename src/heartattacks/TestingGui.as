@@ -69,11 +69,20 @@ package heartattacks
 				10,
 				this.player.SpeedBonus,
 				this.OnSpeedBonus);
+			
+			this.AddSlider(
+				"Girl Speed",
+				10,
+				110,
+				0.2,
+				3,
+				this.girl.MovementSpeed,
+				this.OnGirlSpeed);
 				
 			this.AddSlider(
 				"Trail Width",
 				10,
-				110,
+				130,
 				10,
 				60,
 				this.girl.TrailWidth,
@@ -82,7 +91,7 @@ package heartattacks
 			this.AddSlider(
 				"Trail Length",
 				10,
-				130,
+				150,
 				40,
 				440,
 				this.girl.TrailLength,
@@ -138,6 +147,12 @@ package heartattacks
 		{
 			var slider:HUISlider = HUISlider(e.target);
 			this.girl.TrailLength = slider.value;
+		}
+		
+		private function OnGirlSpeed(e:Event):void
+		{
+			var slider:HUISlider = HUISlider(e.target);
+			this.girl.MovementSpeed = slider.value;
 		}
 	}
 }
