@@ -9,6 +9,7 @@ package heartattacks.states
 	import net.flashpunk.graphics.Tilemap;
 	import net.flashpunk.masks.Grid;
 	import net.flashpunk.World;
+	import net.flashpunk.FP;
 	
 	/**
 	 * ...
@@ -31,15 +32,33 @@ package heartattacks.states
 		    this.add(this.player);
 			this.girl = new Girl(300, 450);
 			this.add(this.girl);
-			this.level = new Level(MapImage, Map);
+			this.level = new Level(MapImage, Map, this.player);
 			this.add(this.level);
-			
-			
 		}
 		
 		override public function update():void
 		{
 			super.update();
+			this.cameraMove();
+		}
+		
+		public function cameraMove():void {
+			//SX e DX
+			if (player.x > FP.width * 0.5 && player.x < this.level.levelWidth - FP.width * 0.5)
+				FP.camera.x = player.x - FP.width * 0.5;
+			else {
+				if (player.x <= FP.width * 0.5)
+					FP.camera.x = 0;
+				if (player.x >= this.level.levelWidth - FP.width * 0.5)
+					FP.camera.x = this.level.levelWidth -FP.width;
+			}
+			
+			//Sotto
+			if (player.y < this.level.levelHeight - FP.height * 0.5)
+				FP.camera.y = player.y - FP.height *0.5;
+			else
+				FP.camera.y = this.level.levelHeight - FP.height;
+			
 		}
 	}
 }

@@ -29,6 +29,7 @@ package heartattacks.doodads
 			this.graphic = this.spritemap;
 			this.spritemap.play("walk");
 			this.setHitbox(25, 29);
+			this.layer = 2;
 		}
 		
 		override public function update():void
