@@ -18,7 +18,7 @@ package heartattacks.doodads
 	{
 		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
 		
-		private var MouseControlsEnabled:Boolean = true;
+		private var MouseControlsEnabled:Boolean = false;
 		private var ArrowControlsEnabled:Boolean = false;
 		
 		public var MovementSpeed:Number = 2;
@@ -53,7 +53,7 @@ package heartattacks.doodads
 			super.render();
 			var dx:Number = centerX + Math.cos(this.heading) * 100;
 			var dy:Number = centerY + Math.sin(this.heading) * 100;
-			Draw.line(this.centerX, this.centerY, dx, dy);
+			Draw.line(this.centerX, this.centerY + FP.camera.y, dx, dy + FP.camera.y);
 		}
 		
 		override public function update():void
@@ -67,7 +67,7 @@ package heartattacks.doodads
 			
 			if (Input.pressed(Key.SPACE))
 			{
-				ArrowControlsEnabled = !ArrowControlsEnabled;
+				MouseControlsEnabled = !MouseControlsEnabled;
 			}
 			
 			if (ArrowControlsEnabled)
@@ -88,7 +88,9 @@ package heartattacks.doodads
 			var girlSpeed:Number = girlDistanceFromCenter / FP.halfHeight * currentSpeed;
 			this.moveBy(Math.cos(this.heading) * playerSpeed, sign * Math.sin(this.heading) * playerSpeed, "level");
 			this.girl.moveBy(0, sign * girlSpeed, "level");
-			//FP.camera.y += currentSpeed * 1.5;
+			FP.camera.y += currentSpeed * 1.5;
+			this.graphic.scrollY = 0;
+			this.girl.graphic.scrollY = 0;
 		}
 		
 		private function isInGirlsTrail():Boolean

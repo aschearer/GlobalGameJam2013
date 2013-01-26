@@ -5,6 +5,7 @@ package heartattacks.doodads
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Draw;
+	import net.flashpunk.FP;
 
 	/**
 	 * ...
@@ -36,7 +37,7 @@ package heartattacks.doodads
 		{
 			super.render();
 			var center:Number = this.x + (this.width - this.TrailWidth) / 2;
-			Draw.rect(center, this.y, this.TrailWidth, -this.TrailLength, 0xFFFFFF, 0.2);
+			Draw.rect(center, this.y + FP.camera.y, this.TrailWidth, -this.TrailLength, 0xFFFFFF, 0.2);
 		}
 	}
 
