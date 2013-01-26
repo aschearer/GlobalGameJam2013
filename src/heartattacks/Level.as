@@ -17,9 +17,13 @@ package heartattacks
 		private var tileSize:int = 64;
 		public var levelWidth:Number;
 		public var levelHeight:Number;
+		public var player:Player;
+		public var girl:Girl;
 		
-		public function Level(tileset:Class, levelData:Class, player:Player, girl:Girl)
+		public function Level(tileset:Class, levelData:Class)
 		{
+			this.girl = new Girl();
+			this.player = new Player(this.girl);
 			var level:XML = new XML(new levelData());
 			this.tiles = new Tilemap(tileset, level.@width, level.@height, tileSize, tileSize);
 			this.graphic = this.tiles;
@@ -29,12 +33,12 @@ package heartattacks
 			
 			this.type = "level";
 			this.layer = 10;
-			this.loadLevel(level, player, girl);
+			this.loadLevel(level);
 			this.levelWidth = level.@width;
 			this.levelHeight = level.@height;
 		}
 		
-		private function loadLevel(level:XML, player:Player, girl:Girl):void
+		private function loadLevel(level:XML):void
 		{
 			var dataList:XMLList = level.Layer1.tile;
 			var dataElement:XML;
@@ -65,7 +69,7 @@ package heartattacks
 				this.grid.setTile(
 					column,
 					row,
-					index > 1);
+					index < 7);
 			}
 		}
 	}
