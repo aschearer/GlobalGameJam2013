@@ -23,8 +23,8 @@ package heartattacks.doodads
 		
 		public override function update():void
 		{
-			this.timer += 1 / 60;
 			if (this.timer > 3)
+			this.timer += 1 / 60;
 			{
 				FP.world.remove(this);
 			}

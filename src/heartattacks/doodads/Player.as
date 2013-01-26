@@ -128,7 +128,28 @@ package heartattacks.doodads
 			if (Input.mouseDown && Input.mouseX)
 			{
 				var deltaX:Number = Input.mouseX < this.x ? 1 : -1;
+				/*
+				if (deltaX > 0)
+				{
+					this.heading = Math.min(Math.PI * 2, this.heading + Math.PI / this.TurningSpeed);
+				}
+				else
+				{
+					this.heading = Math.min(Math.PI, this.heading - Math.PI / this.TurningSpeed);
+				}
+				*/
+				
 				this.heading += deltaX * Math.PI / this.TurningSpeed;
+				this.heading = (Math.PI * 2 + this.heading) % (Math.PI * 2);
+				if (this.heading < Math.PI / 4)
+				{
+					this.heading = Math.PI / 4;
+				}
+				else if (this.heading > 3 * Math.PI / 4)
+				{
+					this.heading = 3 * Math.PI / 4;
+				}
+				
 				if (this.heading < Math.PI / 2 - Math.PI / 6)
 				{
 					this.spritemap.flipped = false;
