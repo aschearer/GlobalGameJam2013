@@ -62,6 +62,7 @@ package heartattacks.doodads
 		
 		override public function update():void
 		{
+			this.girl.percentageToBoy = this.percentageToGirl();
 			var adjustedTime:Number = 1 / 60 + 1 / 60 * this.percentageToGirl();
 			this.timeTillNextHeartBeat += adjustedTime;
 			if (this.timeTillNextHeartBeat >= this.HeartRate)

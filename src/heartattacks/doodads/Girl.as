@@ -18,7 +18,8 @@ package heartattacks.doodads
 		public var TrailLength:Number = 600;
 		public var TrailWidth:Number;
 		public var MovementSpeed:Number = 0.6;
-		public var TimeTillNextMove:Number = 1;
+		public var TimeTillNextMove:Number = 1
+		public var percentageToBoy:Number;
 		
 		[Embed(source = "../../../res/spritesheets/Girl.png")] protected var GirlImage:Class;
 		private var spritemap:Spritemap;
@@ -37,6 +38,7 @@ package heartattacks.doodads
 			this.setHitbox(64, 128);
 			this.layer = 2;
 			this.timeSinceLastMove  = 0;
+			this.percentageToBoy = 0;
 			
 			this.TrailWidth = this.width;
 		}
@@ -51,11 +53,13 @@ package heartattacks.doodads
 		override public function update():void
 		{
 			this.timeSinceLastMove += 1 / 60;
-			if (this.timeSinceLastMove >= this.TimeTillNextMove)
+			var bonusModifier:Number = 1 - .1 * this.percentageToBoy;
+			trace(bonusModifier);
+			if (this.timeSinceLastMove >= this.TimeTillNextMove * bonusModifier)
 			{
 				var column:int = this.pickNewColumn();
 				TweenLite.to(this, 0.5, { x: this.x + this.level.tileSize * column } );
-				this.timeSinceLastMove -= this.TimeTillNextMove;
+				this.timeSinceLastMove -= this.TimeTillNextMove * bonusModifier;
 			}
 		}
 		
