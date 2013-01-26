@@ -30,10 +30,11 @@ package heartattacks.states
 		{
 			this.player = new Player(300, 500);
 		    this.add(this.player);
-			this.girl = new Girl(300, 450);
+		    this.girl = new Girl(300, 500);
 			this.add(this.girl);
 			this.level = new Level(MapImage, Map, this.player);
-			this.add(this.level);
+			this.add(this.level);	
+		
 		}
 		
 		override public function update():void
