@@ -29,7 +29,6 @@ package heartattacks.doodads
 		public var ScorePerBeat:int = 100;
 		public var MinCameraSpeed:Number = 1;
 		public var MaxCameraSpeed:Number = 6;
-		public var MaxHeartRate:Number = .25;
 		
 		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;

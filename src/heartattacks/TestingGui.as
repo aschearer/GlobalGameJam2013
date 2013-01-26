@@ -144,12 +144,6 @@ package heartattacks
 			this.player.HeartRate = slider.value;
 		}
 		
-		private function OnMaxHeartRate(e:Event):void
-		{
-			var slider:HUISlider = HUISlider(e.target);
-			this.player.MaxHeartRate = slider.value;
-		}
-		
 		private function OnScorePerBeat(e:Event):void
 		{
 			var slider:HUISlider = HUISlider(e.target);
