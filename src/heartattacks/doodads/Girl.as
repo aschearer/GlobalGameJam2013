@@ -3,7 +3,8 @@ package heartattacks.doodads
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
-	import net.flashpunk.utils.Input
+	import net.flashpunk.utils.Input;
+	import net.flashpunk.utils.Draw;
 
 	/**
 	 * ...
@@ -11,8 +12,12 @@ package heartattacks.doodads
 	 */
 	public class Girl extends Entity
 	{
+		public var TrailLength:Number = 200;
+		public var TrailWidth:Number;
+		
 		[Embed(source = "../../../res/spritesheets/Cat.png")] protected var girlImage:Class;
 		private var spritemap:Spritemap;
+		
 		public function Girl(x:Number, y:Number) 
 		{
 			super(x, y);
@@ -23,13 +28,21 @@ package heartattacks.doodads
 			this.spritemap.play("walk");
 			this.setHitbox(25, 25);
 			this.layer = 2;
+			
+			this.TrailWidth = this.width;
+		}
+		
+		override public function render():void
+		{
+			super.render();
+			var center:Number = this.x + (this.width - this.TrailWidth) / 2;
+			Draw.rect(center, this.y, this.TrailWidth, -this.TrailLength, 0xFFFFFF, 0.2);
 		}
 		
 		override public function update():void 
 		{
-			
 			super.update();
-			this.moveBy(0, -0.3, "level" );
+			this.moveBy(0, 0.3, "level" );
 			
 		}
 	}

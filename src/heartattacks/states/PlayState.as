@@ -45,7 +45,7 @@ package heartattacks.states
 		
 		public override function begin():void
 		{
-			FP.stage.addChild(new TestingGui(this.player));
+			FP.stage.addChild(new TestingGui(this.player, this.girl));
 		}
 		
 		override public function update():void

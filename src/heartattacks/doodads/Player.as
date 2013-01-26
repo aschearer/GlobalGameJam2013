@@ -1,5 +1,6 @@
 package heartattacks.doodads 
 {
+	import flash.geom.Rectangle;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
@@ -16,13 +17,12 @@ package heartattacks.doodads
 	{
 		[Embed(source = "../../../res/spritesheets/Sheet.png")] private var PlayerImage:Class;
 		
-		private const Speed:Number = 0.8;
-		private const Torque:Number = 128;
 		private var MouseControlsEnabled:Boolean = true;
 		private var ArrowControlsEnabled:Boolean = false;
 		
-		public var MovementSpeed:Number;
-		public var TurningSpeed:Number;
+		public var MovementSpeed:Number = 0.8;
+		public var TurningSpeed:Number = 128;
+		public var SpeedBonus:Number = 2;
 		
 		private var spritemap:Spritemap;
 		private var heading:Number;
@@ -36,8 +36,6 @@ package heartattacks.doodads
 			this.heading = 0;
 			this.spritemap = new Spritemap(PlayerImage, 25, 29);
 			this.spritemap.add("walk", [0, 1], 4, true);
-			this.MovementSpeed = Speed;
-			this.TurningSpeed = Torque;
 			this.graphic = this.spritemap;
 			this.spritemap.play("walk");
 			this.setHitbox(25, 29);
@@ -61,13 +59,24 @@ package heartattacks.doodads
 			}
 			
 			var currentSpeed:Number = this.MovementSpeed;
-			var distanceToGirl:Number = Math.sqrt(Math.pow((girl.x - this.x), 2) + Math.pow((girl.y - this.y), 2));
-			if (distanceToGirl < this.radius)
+			if (this.isInGirlsTrail())
 			{
-				currentSpeed *= 2;
+				currentSpeed *= this.SpeedBonus;
 			}
-			this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * -currentSpeed, "level");
+			
+			this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * currentSpeed, "level");
 			this.spritemap.angle = this.heading * 180 / Math.PI;
+		}
+		
+		private function isInGirlsTrail():Boolean
+		{
+			var rect:Rectangle = new Rectangle(
+				this.girl.centerX - this.girl.TrailWidth / 2,
+				this.girl.y - this.girl.TrailLength,
+				this.girl.TrailWidth,
+				this.girl.TrailLength);
+				
+			return rect.contains(this.centerX, this.centerY);
 		}
 		
 		private function processMouseControls():void
@@ -77,12 +86,6 @@ package heartattacks.doodads
 				var deltaX:Number = Input.mouseX < this.x ? -1 : 1;
 				this.heading += deltaX * Math.PI / this.TurningSpeed;
 			}
-		}
-		
-		public override function render():void
-		{
-			super.render();
-			Draw.circle(this.girl.centerX, this.girl.centerY, this.radius);
 		}
 		
 		private function processArrowControls():void
