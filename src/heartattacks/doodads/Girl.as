@@ -16,17 +16,17 @@ package heartattacks.doodads
 		public var TrailWidth:Number;
 		public var MovementSpeed:Number = 0.6;
 		
-		[Embed(source = "../../../res/spritesheets/Cat.png")] protected var girlImage:Class;
+		[Embed(source = "../../../res/spritesheets/Girl.png")] protected var GirlImage:Class;
 		private var spritemap:Spritemap;
 		
 		public function Girl(x:Number, y:Number) 
 		{
 			super(x, y);
-			this.spritemap = new Spritemap(girlImage, 25, 25);
-			this.spritemap.add("walk", [0, 1], 4, true);
+			this.spritemap = new Spritemap(GirlImage, 64, 128);
+			this.spritemap.add("walk-forward", [1, 2, 3, 4, 5, 6], 12, true);
 			this.graphic = this.spritemap;
-			this.spritemap.play("walk");
-			this.setHitbox(25, 25);
+			this.spritemap.play("walk-forward");
+			this.setHitbox(128, 64);
 			this.layer = 2;
 			
 			this.TrailWidth = this.width;
