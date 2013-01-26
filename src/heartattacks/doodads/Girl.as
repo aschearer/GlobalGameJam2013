@@ -25,6 +25,8 @@ package heartattacks.doodads
 		private var spritemap:Spritemap;
 		
 		private var timeSinceLastMove:Number;
+		private var timeTillMarker:Number = 0.1;
+		private var timeToMarker:Number = 0;
 		private var level:Level;
 		
 		public function Girl(level:Level) 
@@ -46,8 +48,8 @@ package heartattacks.doodads
 		override public function render():void
 		{
 			super.render();
-			var center:Number = this.x + (this.width - this.TrailWidth) / 2;
-			Draw.rect(center, this.y + FP.camera.y, this.TrailWidth, -this.TrailLength, 0xFFFFFF, 0.2);
+			//var center:Number = this.x + (this.width - this.TrailWidth) / 2;
+			//Draw.rect(center, this.y + FP.camera.y, this.TrailWidth, -this.TrailLength, 0xFFFFFF, 0.2);
 		}
 		
 		override public function update():void
@@ -59,6 +61,14 @@ package heartattacks.doodads
 				var column:int = this.pickNewColumn();
 				TweenLite.to(this, 0.5, { x: this.x + this.level.tileSize * column } );
 				this.timeSinceLastMove -= this.TimeTillNextMove * bonusModifier;
+			}
+			
+			this.timeToMarker -= 1 / 60;
+			if (this.timeToMarker <= 0)
+			{
+				this.timeToMarker = this.timeTillMarker;
+				var marker:Marker = new Marker(this.centerX, this.centerY);
+				FP.world.add(marker);
 			}
 		}
 		

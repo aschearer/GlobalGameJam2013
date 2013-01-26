@@ -36,6 +36,7 @@ package heartattacks.doodads
 		private var radius:Number = 100;
 		private var girl:Girl;
 		private var heart:HeartMeter;
+		private var runTime:Number = 0;
 		
 		public function Player(girl:Girl, heart:HeartMeter) 
 		{
@@ -86,8 +87,9 @@ package heartattacks.doodads
 				this.processMouseControls();
 			}
 			
+			this.runTime += 1 / 60;
 			var currentSpeed:Number = this.MovementSpeed;
-			var sign:Number = this.isInGirlsTrail() ? 1 : -1;
+			var sign:Number = this.runTime < 0.5 || this.isInGirlsTrail() ? 1 : -1;
 			
 			var playerDistanceFromCenter:Number = FP.halfHeight - this.centerY;
 			var playerSpeed:Number = playerDistanceFromCenter / FP.halfHeight * currentSpeed;
@@ -118,13 +120,7 @@ package heartattacks.doodads
 		
 		private function isInGirlsTrail():Boolean
 		{
-			var rect:Rectangle = new Rectangle(
-				this.girl.centerX - this.girl.TrailWidth / 2,
-				this.girl.y - this.girl.TrailLength,
-				this.girl.TrailWidth,
-				this.girl.TrailLength);
-				
-			return rect.contains(this.centerX, this.centerY);
+			return this.collide("marker", this.x + FP.camera.x, this.y + FP.camera.y);
 		}
 		
 		private function processMouseControls():void

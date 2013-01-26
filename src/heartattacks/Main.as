@@ -5,6 +5,7 @@ package heartattacks
 	import heartattacks.states.PlayState;
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
+	import net.flashpunk.utils.Key;
 	
 	/**
 	 * ...
@@ -17,6 +18,9 @@ package heartattacks
 		{
 			super(800, 600, 60, false);
 			FP.world = new PlayState();
+			
+			FP.console.enable();
+			FP.console.toggleKey = Key.F1;
 		}
 	}
 }

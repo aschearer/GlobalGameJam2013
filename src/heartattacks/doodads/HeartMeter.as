@@ -16,6 +16,7 @@ package heartattacks.doodads
 		
 		private var spriteMap:Spritemap;
 		private var label:Text;
+		private var scrollOffset:Number;
 		
 		public function HeartMeter()
 		{
