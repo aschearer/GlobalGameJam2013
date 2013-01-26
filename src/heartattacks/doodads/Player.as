@@ -7,6 +7,7 @@ package heartattacks.doodads
 	import net.flashpunk.utils.Input
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.utils.Draw
+	import net.flashpunk.FP;
 
 	/**
 	 * ...
@@ -20,9 +21,9 @@ package heartattacks.doodads
 		private var MouseControlsEnabled:Boolean = false;
 		private var ArrowControlsEnabled:Boolean = false;
 		
-		public var MovementSpeed:Number = 0.8;
+		public var MovementSpeed:Number = -1;
 		public var TurningSpeed:Number = 128;
-		public var SpeedBonus:Number = 2;
+		public var SpeedBonus:Number = 4;
 		public var CurrentScore:uint = 0;
 		public var HeartRate:Number = 70 / 60;
 		public var ScorePerBeat:int = 100;
@@ -71,12 +72,18 @@ package heartattacks.doodads
 			}
 			
 			var currentSpeed:Number = this.MovementSpeed;
+			
 			if (this.isInGirlsTrail())
 			{
-				currentSpeed *= this.SpeedBonus;
+				currentSpeed *= -1;
 			}
 			
-			this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * currentSpeed, "level");			
+			var playerDistanceFromCenter:Number = FP.halfHeight - this.centerY;
+			var girlDistanceFromCenter:Number = FP.halfHeight - this.girl.centerY;
+			//this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * currentSpeed, "level");
+			this.moveBy(0, playerDistanceFromCenter / FP.halfHeight * currentSpeed, "level");
+			this.girl.moveBy(0, girlDistanceFromCenter / FP.halfHeight * currentSpeed, "level");
+			//FP.camera.y += currentSpeed * 1.5;
 		}
 		
 		private function isInGirlsTrail():Boolean

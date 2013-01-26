@@ -56,7 +56,6 @@ package heartattacks.states
 		override public function update():void
 		{
 			super.update();
-			this.cameraMove();
 			this.scoreLabel.scrollX = 0;
 			this.scoreLabel.scrollY = 0;
 			this.scoreLabel.x = FP.width - this.scoreLabel.width - 10;
@@ -76,10 +75,6 @@ package heartattacks.states
 				point);
 			
 			return obstacle != null;
-		}
-		
-		public function cameraMove():void {
-			FP.camera.y += this.CameraSpeed;
 		}
 	}
 }

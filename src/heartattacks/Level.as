@@ -45,14 +45,14 @@ package heartattacks
 				
 				if (index == 11)
 				{
-					player.x = column * 50;
-					player.y = row * 50;
+					player.x = column * 50 - (player.width - 50) / 2;
+					player.y = row * 50 - (player.height - 50) / 2;
 					continue;
 				}
 				else if (index == 10)
 				{
-					girl.x = column * 50;
-					girl.y = row * 50;
+					girl.x = column * 50 - (girl.width - 50) / 2;
+					girl.y = row * 50 - (girl.height - 50) / 2;
 					continue;
 				}
 				

@@ -12,7 +12,7 @@ package heartattacks.doodads
 	 */
 	public class Girl extends Entity
 	{
-		public var TrailLength:Number = 200;
+		public var TrailLength:Number = 600;
 		public var TrailWidth:Number;
 		public var MovementSpeed:Number = 0.6;
 		
@@ -37,13 +37,6 @@ package heartattacks.doodads
 			super.render();
 			var center:Number = this.x + (this.width - this.TrailWidth) / 2;
 			Draw.rect(center, this.y, this.TrailWidth, -this.TrailLength, 0xFFFFFF, 0.2);
-		}
-		
-		override public function update():void 
-		{
-			super.update();
-			this.moveBy(0, this.MovementSpeed, "level" );
-			
 		}
 	}
 
