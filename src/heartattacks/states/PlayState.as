@@ -16,7 +16,7 @@ package heartattacks.states
 		override public function create():void
 		{
 			this.add(new FlxText(100, 100, 100, "Hello World!"));
-		    this.add(new Player(300,400))
+		    this.add(new Player(300, 400));
 		}
 	}
 }
