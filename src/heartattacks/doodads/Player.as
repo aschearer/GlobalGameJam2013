@@ -18,8 +18,11 @@ package heartattacks.doodads
 		
 		private const Speed:Number = 0.8;
 		private const Torque:Number = 128;
-		private const MouseControlsEnabled:Boolean = true;
-		private const ArrowControlsEnabled:Boolean = false;
+		private var MouseControlsEnabled:Boolean = true;
+		private var ArrowControlsEnabled:Boolean = false;
+		
+		public var MovementSpeed:Number;
+		public var TurningSpeed:Number;
 		
 		private var spritemap:Spritemap;
 		private var heading:Number;
@@ -33,6 +36,8 @@ package heartattacks.doodads
 			this.heading = 0;
 			this.spritemap = new Spritemap(PlayerImage, 25, 29);
 			this.spritemap.add("walk", [0, 1], 4, true);
+			this.MovementSpeed = Speed;
+			this.TurningSpeed = Torque;
 			this.graphic = this.spritemap;
 			this.spritemap.play("walk");
 			this.setHitbox(25, 29);
@@ -41,6 +46,11 @@ package heartattacks.doodads
 		
 		override public function update():void
 		{
+			if (Input.pressed(Key.SPACE))
+			{
+				ArrowControlsEnabled = !ArrowControlsEnabled;
+			}
+			
 			if (ArrowControlsEnabled)
 			{
 				this.processArrowControls();
@@ -50,25 +60,23 @@ package heartattacks.doodads
 				this.processMouseControls();
 			}
 			
-			this.spritemap.angle = this.heading * 180 / Math.PI;
-		}
-		
-		private function processMouseControls():void
-		{
-			var currentSpeed:Number = Speed;
+			var currentSpeed:Number = this.MovementSpeed;
 			var distanceToGirl:Number = Math.sqrt(Math.pow((girl.x - this.x), 2) + Math.pow((girl.y - this.y), 2));
 			if (distanceToGirl < this.radius)
 			{
 				currentSpeed *= 2;
 			}
-			
+			this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * -currentSpeed, "level");
+			this.spritemap.angle = this.heading * 180 / Math.PI;
+		}
+		
+		private function processMouseControls():void
+		{
 			if (Input.mouseDown && Input.mouseX)
 			{
 				var deltaX:Number = Input.mouseX < this.x ? -1 : 1;
-				this.heading += deltaX * Math.PI / Torque;
+				this.heading += deltaX * Math.PI / this.TurningSpeed;
 			}
-			
-			this.moveBy(Math.sin(this.heading) * currentSpeed, Math.cos(this.heading) * -currentSpeed, "level");
 		}
 		
 		public override function render():void

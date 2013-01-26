@@ -7,6 +7,7 @@ package heartattacks.states
 	import heartattacks.doodads.Player;
 	import heartattacks.doodads.Girl;
 	import heartattacks.Level;
+	import heartattacks.TestingGui;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
@@ -15,6 +16,7 @@ package heartattacks.states
 	import net.flashpunk.World;
 	import net.flashpunk.FP;
 	import net.flashpunk.utils.Draw;
+	import com.bit101.components.Slider;
 	
 	/**
 	 * ...
@@ -39,6 +41,11 @@ package heartattacks.states
 			this.add(this.player);
 			this.level = new Level(MapImage, Map, this.player, this.girl);
 			this.add(this.level);
+		}
+		
+		public override function begin():void
+		{
+			FP.stage.addChild(new TestingGui(this.player));
 		}
 		
 		override public function update():void
