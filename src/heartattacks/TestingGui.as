@@ -7,6 +7,7 @@ package heartattacks
 	import flash.events.Event;
 	import heartattacks.doodads.Girl;
 	import heartattacks.doodads.Player;
+	import heartattacks.states.PlayState;
 	/**
 	 * ...
 	 * @author The Heart Attacks
@@ -16,19 +17,30 @@ package heartattacks
 		private var movementSpeedSlider:HUISlider;
 		private var player:Player;
 		private var girl:Girl;
+		private var state:PlayState;
 		
-		public function TestingGui(player:Player, girl:Girl) 
+		public function TestingGui(state:PlayState, player:Player, girl:Girl) 
 		{
 			this.player = player;
 			this.girl = girl;
+			this.state = state;
 			
 			this.width = 240;
-			this.height = 180;
+			this.height = 200;
+			
+			this.AddSlider(
+				"Camera Speed",
+				10,
+				10,
+				0.1,
+				2,
+				this.state.CameraSpeed,
+				this.OnCameraSpeed);
 			
 			this.AddSlider(
 				"Movement Speed",
 				10,
-				10,
+				30,
 				0.2,
 				3,
 				this.player.MovementSpeed,
@@ -37,7 +49,7 @@ package heartattacks
 			this.AddSlider(
 				"Turning Speed",
 				10,
-				30,
+				50,
 				100,
 				500,
 				600 - this.player.TurningSpeed,
@@ -46,7 +58,7 @@ package heartattacks
 			this.AddSlider(
 				"Heartrate",
 				10,
-				50,
+				70,
 				10 / 60,
 				140 / 60,
 				this.player.HeartRate,
@@ -55,7 +67,7 @@ package heartattacks
 				this.AddSlider(
 				"Score per Beat",
 				10,
-				70,
+				90,
 				1,
 				1000,
 				this.player.ScorePerBeat,
@@ -64,7 +76,7 @@ package heartattacks
 			this.AddSlider(
 				"Speed Bonus",
 				10,
-				90,
+				110,
 				2,
 				10,
 				this.player.SpeedBonus,
@@ -73,7 +85,7 @@ package heartattacks
 			this.AddSlider(
 				"Girl Speed",
 				10,
-				110,
+				130,
 				0.2,
 				3,
 				this.girl.MovementSpeed,
@@ -82,7 +94,7 @@ package heartattacks
 			this.AddSlider(
 				"Trail Width",
 				10,
-				130,
+				150,
 				10,
 				60,
 				this.girl.TrailWidth,
@@ -91,7 +103,7 @@ package heartattacks
 			this.AddSlider(
 				"Trail Length",
 				10,
-				150,
+				170,
 				40,
 				440,
 				this.girl.TrailLength,
@@ -153,6 +165,12 @@ package heartattacks
 		{
 			var slider:HUISlider = HUISlider(e.target);
 			this.girl.MovementSpeed = slider.value;
+		}
+		
+		private function OnCameraSpeed(e:Event):void
+		{
+			var slider:HUISlider = HUISlider(e.target);
+			this.state.CameraSpeed = slider.value;
 		}
 	}
 }

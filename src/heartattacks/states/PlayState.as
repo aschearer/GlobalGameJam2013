@@ -34,6 +34,8 @@ package heartattacks.states
 		private var level:Level;
 		private var scoreLabel:Text;
 		
+		public var CameraSpeed:Number = 1;
+		
 		public function PlayState()
 		{
 			this.girl = new Girl(300, 500);
@@ -48,7 +50,7 @@ package heartattacks.states
 		
 		public override function begin():void
 		{
-			FP.stage.addChild(new TestingGui(this.player, this.girl));
+			FP.stage.addChild(new TestingGui(this, this.player, this.girl));
 		}
 		
 		override public function update():void
@@ -77,22 +79,7 @@ package heartattacks.states
 		}
 		
 		public function cameraMove():void {
-			//SX e DX
-			if (player.x > FP.width * 0.5 && player.x < this.level.levelWidth - FP.width * 0.5)
-				FP.camera.x = player.x - FP.width * 0.5;
-			else {
-				if (player.x <= FP.width * 0.5)
-					FP.camera.x = 0;
-				if (player.x >= this.level.levelWidth - FP.width * 0.5)
-					FP.camera.x = this.level.levelWidth -FP.width;
-			}
-			
-			//Sotto
-			if (player.y < this.level.levelHeight - FP.height * 0.5)
-				FP.camera.y = player.y - FP.height *0.5;
-			else
-				FP.camera.y = this.level.levelHeight - FP.height;
-			
+			FP.camera.y += this.CameraSpeed;
 		}
 	}
 }

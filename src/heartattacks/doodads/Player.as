@@ -17,7 +17,7 @@ package heartattacks.doodads
 	{
 		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
 		
-		private var MouseControlsEnabled:Boolean = true;
+		private var MouseControlsEnabled:Boolean = false;
 		private var ArrowControlsEnabled:Boolean = false;
 		
 		public var MovementSpeed:Number = 0.8;

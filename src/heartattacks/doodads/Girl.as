@@ -26,7 +26,7 @@ package heartattacks.doodads
 			this.spritemap.add("walk-forward", [1, 2, 3, 4, 5, 6], 12, true);
 			this.graphic = this.spritemap;
 			this.spritemap.play("walk-forward");
-			this.setHitbox(128, 64);
+			this.setHitbox(64, 128);
 			this.layer = 2;
 			
 			this.TrailWidth = this.width;
