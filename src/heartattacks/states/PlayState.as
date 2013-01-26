@@ -4,6 +4,7 @@ package heartattacks.states
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import heartattacks.doodads.Player;
+	import heartattacks.doodads.Girl;
 	import heartattacks.Level;
 	import net.flashpunk.graphics.Tilemap;
 	import net.flashpunk.masks.Grid;
@@ -20,7 +21,7 @@ package heartattacks.states
 		
 		[Embed(source = "../../../res/tilemaps/TestLevel.oel", mimeType = "application/octet-stream")]
 		private var Map:Class;
-		
+		private var girl:Girl;
 		private var player:Player;
 		private var level:Level;
 		
@@ -28,9 +29,12 @@ package heartattacks.states
 		{
 			this.player = new Player(300, 500);
 		    this.add(this.player);
-			
+			this.girl = new Girl(300, 450);
+			this.add(this.girl);
 			this.level = new Level(MapImage, Map);
 			this.add(this.level);
+			
+			
 		}
 		
 		override public function update():void
