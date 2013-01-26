@@ -9,6 +9,8 @@ package heartattacks.states
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	import org.flixel.FlxTilemap;
+	import org.flixel.FlxObject;
+	import org.flixel.FlxG;
 	
 	/**
 	 * ...
@@ -22,14 +24,24 @@ package heartattacks.states
 		[Embed(source = "../../../res/tilemaps/Map.txt", mimeType = "application/octet-stream")]
 		private var Map:Class;
 		
+		private var player:Player;
+		private var level:FlxTilemap;
+		
 		override public function create():void
 		{
 			this.add(new FlxText(100, 100, 100, "Hello World!"));
-		    this.add(new Player(300, 400));
+			this.player = new Player(300, 400);
+		    this.add(this.player);
 
-			var map:FlxTilemap = new FlxTilemap();
-			map.loadMap(new Map(), MapImage, 50, 50);
-			this.add(map);
+			this.level = new FlxTilemap();
+			this.level.loadMap(new Map(), MapImage, 50, 50);
+			this.add(this.level);
+		}
+		
+		override public function update():void
+		{
+			super.update();
+			FlxG.collide(this.level, this.player);
 		}
 	}
 }
