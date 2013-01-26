@@ -1,5 +1,7 @@
 package heartattacks.doodads 
 {
+	import com.greensock.TweenLite;
+	import heartattacks.Level;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
@@ -16,19 +18,25 @@ package heartattacks.doodads
 		public var TrailLength:Number = 600;
 		public var TrailWidth:Number;
 		public var MovementSpeed:Number = 0.6;
+		public var TimeTillNextMove:Number = 1;
 		
 		[Embed(source = "../../../res/spritesheets/Girl.png")] protected var GirlImage:Class;
 		private var spritemap:Spritemap;
 		
-		public function Girl() 
+		private var timeSinceLastMove:Number;
+		private var level:Level;
+		
+		public function Girl(level:Level) 
 		{
 			super(0, 0);
+			this.level = level;
 			this.spritemap = new Spritemap(GirlImage, 64, 128);
 			this.spritemap.add("walk-forward", [1, 2, 3, 4, 5, 6], 12, true);
 			this.graphic = this.spritemap;
 			this.spritemap.play("walk-forward");
 			this.setHitbox(64, 128);
 			this.layer = 2;
+			this.timeSinceLastMove  = 0;
 			
 			this.TrailWidth = this.width;
 		}
@@ -39,6 +47,52 @@ package heartattacks.doodads
 			var center:Number = this.x + (this.width - this.TrailWidth) / 2;
 			Draw.rect(center, this.y + FP.camera.y, this.TrailWidth, -this.TrailLength, 0xFFFFFF, 0.2);
 		}
+		
+		override public function update():void
+		{
+			this.timeSinceLastMove += 1 / 60;
+			if (this.timeSinceLastMove >= this.TimeTillNextMove)
+			{
+				var column:int = this.pickNewColumn();
+				TweenLite.to(this, 0.5, { x: this.x + this.level.tileSize * column } );
+				this.timeSinceLastMove -= this.TimeTillNextMove;
+			}
+		}
+		
+		private function pickNewColumn():int
+		{
+			var column:int = this.x / this.level.tileSize;
+			var r:Number = Math.random();
+			if (r < .6)
+			{
+				if (r < .3 && column > this.level.gutterLeft + 1)
+				{
+					return -1;
+				}
+				else if (column < this.level.numColumns - this.level.gutterRight - 1)
+				{
+					return 1;
+				}
+				else
+				{
+					return 0;
+				}
+			}
+			else
+			{
+				if ((r - .6) < .2 && column > this.level.gutterLeft + 1)
+				{
+					return -2;
+				}
+				else if (column < this.level.numColumns - this.level.gutterRight - 2)
+				{
+					return 2;
+				}
+				else
+				{
+					return 0;
+				}
+			}
+		}
 	}
-
 }

@@ -90,9 +90,18 @@ package heartattacks
 				this.OnTrailLength);
 				
 			this.AddSlider(
-				"Camera Speed",
+				"Time Till Lane Change",
 				10,
 				150,
+				0.25,
+				15,
+				this.girl.TimeTillNextMove,
+				this.OnLaneChange);
+				
+			this.AddSlider(
+				"Camera Speed",
+				10,
+				170,
 				1,
 				4,
 				this.player.CameraSpeed,
@@ -160,6 +169,12 @@ package heartattacks
 		{
 			var slider:HUISlider = HUISlider(e.target);
 			this.player.CameraSpeed = slider.value;
+		}
+		
+		private function OnLaneChange(e:Event):void
+		{
+			var slider:HUISlider = HUISlider(e.target);
+			this.girl.TimeTillNextMove = slider.value;
 		}
 	}
 }
