@@ -24,7 +24,7 @@ package heartattacks.states
 	 */
 	public class PlayState extends World
 	{
-		[Embed(source = "../../../res/tilesets/Tiles.png")]
+		[Embed(source = "../../../res/tilesets/CityTiles.png")]
 		private var MapImage:Class;
 		
 		[Embed(source = "../../../res/tilemaps/TestLevel.oel", mimeType = "application/octet-stream")]
@@ -36,9 +36,9 @@ package heartattacks.states
 		
 		public function PlayState()
 		{
-			this.girl = new Girl(300, 500);
+			this.girl = new Girl();
 			this.add(this.girl);
-			this.player = new Player(300, 500, girl);
+			this.player = new Player(girl);
 			this.add(this.player);
 			this.level = new Level(MapImage, Map, this.player, this.girl);
 			this.add(this.level);

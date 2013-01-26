@@ -49,6 +49,15 @@
       </TileSize>
       <TileSep>0</TileSep>
     </Tileset>
+    <Tileset>
+      <Name>City Tileset</Name>
+      <FilePath>..\tilesets\CityTiles.png</FilePath>
+      <TileSize>
+        <Width>64</Width>
+        <Height>64</Height>
+      </TileSize>
+      <TileSep>0</TileSep>
+    </Tileset>
   </Tilesets>
   <EntityDefinitions />
 </project>

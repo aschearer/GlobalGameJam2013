@@ -14,16 +14,17 @@ package heartattacks
 	{
 		private var tiles:Tilemap;
 		private var grid:Grid;
+		private var tileSize:int = 64;
 		public var levelWidth:Number;
 		public var levelHeight:Number;
 		
 		public function Level(tileset:Class, levelData:Class, player:Player, girl:Girl)
 		{
 			var level:XML = new XML(new levelData());
-			this.tiles = new Tilemap(tileset, level.@width, level.@height, 50, 50);
+			this.tiles = new Tilemap(tileset, level.@width, level.@height, tileSize, tileSize);
 			this.graphic = this.tiles;
 			
-			this.grid = new Grid(level.@width, level.@height, 50, 50);
+			this.grid = new Grid(level.@width, level.@height, tileSize, tileSize);
 			this.mask = this.grid;
 			
 			this.type = "level";
@@ -43,16 +44,16 @@ package heartattacks
 				var row:uint = int(dataElement.@y);
 				var index:uint = int(dataElement.@id);
 				
-				if (index == 11)
+				if (index == 10)
 				{
-					player.x = column * 50 - (player.width - 50) / 2;
-					player.y = row * 50 - (player.height - 50) / 2;
+					player.x = column * tileSize - (player.width - tileSize) / 2;
+					player.y = row * tileSize - (player.height - tileSize) / 2;
 					continue;
 				}
-				else if (index == 10)
+				else if (index == 14)
 				{
-					girl.x = column * 50 - (girl.width - 50) / 2;
-					girl.y = row * 50 - (girl.height - 50) / 2;
+					girl.x = column * tileSize - (girl.width - tileSize) / 2;
+					girl.y = row * tileSize - (girl.height - tileSize) / 2;
 					continue;
 				}
 				

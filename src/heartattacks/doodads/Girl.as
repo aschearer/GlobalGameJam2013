@@ -20,9 +20,9 @@ package heartattacks.doodads
 		[Embed(source = "../../../res/spritesheets/Girl.png")] protected var GirlImage:Class;
 		private var spritemap:Spritemap;
 		
-		public function Girl(x:Number, y:Number) 
+		public function Girl() 
 		{
-			super(x, y);
+			super(0, 0);
 			this.spritemap = new Spritemap(GirlImage, 64, 128);
 			this.spritemap.add("walk-forward", [1, 2, 3, 4, 5, 6], 12, true);
 			this.graphic = this.spritemap;

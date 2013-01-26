@@ -35,9 +35,9 @@ package heartattacks.doodads
 		private var radius:Number = 100;
 		private var girl:Girl;
 		
-		public function Player(x:Number, y:Number, girl:Girl) 
+		public function Player(girl:Girl) 
 		{
-			super(x, y);
+			super(0, 0);
 			this.girl = girl;
 			this.heading = Math.PI / 2;
 			this.spritemap = new Spritemap(PlayerImage, 128, 128);
