@@ -25,10 +25,11 @@ package heartattacks.doodads
 		public var TurningSpeed:Number = 128;
 		public var SpeedBonus:Number = 4;
 		public var CurrentScore:uint = 0;
-		public var HeartRate:Number = 60 / 60;
+		public var HeartRate:Number = 1;
 		public var ScorePerBeat:int = 100;
 		public var MinCameraSpeed:Number = 1;
 		public var MaxCameraSpeed:Number = 6;
+		public var MaxHeartRate:Number = .25;
 		
 		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;
@@ -62,7 +63,8 @@ package heartattacks.doodads
 		
 		override public function update():void
 		{
-			this.timeTillNextHeartBeat += 1 / 60;
+			var adjustedTime:Number = 1 / 60 + 1 / 60 * this.percentageToGirl();
+			this.timeTillNextHeartBeat += adjustedTime;
 			if (this.timeTillNextHeartBeat >= this.HeartRate)
 			{
 				this.timeTillNextHeartBeat -= this.HeartRate;
@@ -99,12 +101,19 @@ package heartattacks.doodads
 			var percentToGirl:Number = Math.min(1, Math.max(0, (totalDistance - distanceToGirl) / totalDistance));
 			var deltaSpeed:Number = this.MaxCameraSpeed - this.MinCameraSpeed;
 			
-			FP.camera.y += currentSpeed * ((deltaSpeed * percentToGirl) + this.MinCameraSpeed);
+			FP.camera.y += currentSpeed * ((deltaSpeed * this.percentageToGirl()) + this.MinCameraSpeed);
 			this.graphic.scrollY = 0;
 			this.girl.graphic.scrollY = 0;
 			this.heart.x = this.x;
 			this.heart.y = this.y - 40;
 			this.heart.graphic.scrollY = 0;
+		}
+		
+		private function percentageToGirl():Number
+		{
+			var distanceToGirl:Number = Math.pow(this.girl.x - this.x, 2) + Math.pow(this.girl.y - this.y, 2);
+			var totalDistance:Number = FP.height * FP.height;
+			return Math.min(1, Math.max(0, (totalDistance - distanceToGirl) / totalDistance));
 		}
 		
 		private function isInGirlsTrail():Boolean

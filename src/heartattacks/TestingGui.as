@@ -24,7 +24,7 @@ package heartattacks
 			this.girl = girl;
 			
 			this.width = 240;
-			this.height = 220;
+			this.height = 230;
 			
 			this.AddSlider(
 				"Movement Speed",
@@ -48,12 +48,12 @@ package heartattacks
 				"Heartrate",
 				10,
 				50,
-				10 / 60,
-				140 / 60,
+				.5,
+				10,
 				this.player.HeartRate,
 				this.OnHeartRate);
 				
-				this.AddSlider(
+			this.AddSlider(
 				"Score per Beat",
 				10,
 				70,
@@ -142,6 +142,12 @@ package heartattacks
 		{
 			var slider:HUISlider = HUISlider(e.target);
 			this.player.HeartRate = slider.value;
+		}
+		
+		private function OnMaxHeartRate(e:Event):void
+		{
+			var slider:HUISlider = HUISlider(e.target);
+			this.player.MaxHeartRate = slider.value;
 		}
 		
 		private function OnScorePerBeat(e:Event):void
