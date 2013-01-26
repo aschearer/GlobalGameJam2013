@@ -1,15 +1,20 @@
 package heartattacks.states 
 {
 	import flash.events.Event;
+	import flash.geom.Point;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import heartattacks.doodads.Player;
 	import heartattacks.doodads.Girl;
 	import heartattacks.Level;
+	import net.flashpunk.Entity;
+	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Text;
 	import net.flashpunk.graphics.Tilemap;
 	import net.flashpunk.masks.Grid;
 	import net.flashpunk.World;
 	import net.flashpunk.FP;
+	import net.flashpunk.utils.Draw;
 	
 	/**
 	 * ...
@@ -28,19 +33,33 @@ package heartattacks.states
 		
 		public function PlayState()
 		{
-			this.player = new Player(300, 500);
-		    this.add(this.player);
-		    this.girl = new Girl(300, 500);
+			this.girl = new Girl(300, 500);
 			this.add(this.girl);
-			this.level = new Level(MapImage, Map, this.player);
-			this.add(this.level);	
-		
+			this.player = new Player(300, 500, girl);
+			this.add(this.player);
+			this.level = new Level(MapImage, Map, this.player, this.girl);
+			this.add(this.level);
 		}
 		
 		override public function update():void
 		{
 			super.update();
 			this.cameraMove();
+		}
+		
+		private function CanGirlSeePlayer():Boolean
+		{
+			var point:Point = new Point();
+			var obstacle:Entity = this.collideLine(
+				"level", 
+				this.girl.x + this.girl.halfWidth, 
+				this.girl.y + this.girl.halfHeight, 
+				this.player.x + this.player.halfWidth, 
+				this.player.y + this.player.halfHeight,
+				1,
+				point);
+			
+			return obstacle != null;
 		}
 		
 		public function cameraMove():void {
