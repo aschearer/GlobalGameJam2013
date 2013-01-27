@@ -66,7 +66,8 @@ package heartattacks.doodads
 			this.states.addState("scared-state", new ScaredState());
 			this.states.addState("dying-state", new DyingState());
 		}
-		
+	
+		/*
 		override public function render():void 
 		{
 			super.render();
@@ -74,6 +75,7 @@ package heartattacks.doodads
 			var dy:Number = Math.sin(this.heading) * 50 + FP.camera.y + this.centerY;
 			Draw.line(this.centerX + FP.camera.x, this.centerY + FP.camera.y, dx, dy);
 		}
+		*/
 		
 		public function get isDead():Boolean
 		{
