@@ -1,7 +1,9 @@
 package heartattacks.doodads 
 {
 	import net.flashpunk.Entity;
+	import net.flashpunk.graphics.Graphiclist;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Draw;
 	import net.flashpunk.FP;
 	
@@ -18,14 +20,16 @@ package heartattacks.doodads
 		
 		public function Marker(x:int, y:int) 
 		{
-			super(x - 12 + this.random(-4, 4), y + FP.camera.y - 12 + this.random(-4, 4));
-			this.setHitbox(24, 24);
+			super(x - 16 + this.random(-4, 4), y + FP.camera.y - 16 + this.random(-4, 4));
+			this.setHitbox(32, 32);
 			this.layer = 8;
 			this.type = "marker";
-			var image:Image = new Image(MarkerImage);
-			image.angle = this.random(0, 2 * Math.PI);
+			var image1:Spritemap = new Spritemap(MarkerImage, 32, 32);
+			image1.add("main", [0, 1, 2, 3, 4, 5, 6], 12, true);
+			image1.play("main");
+			//image.angle = this.random(0, 2 * Math.PI);
 			//image.alpha = this.random(0.1, 1);
-			this.graphic = image;
+			this.graphic = image1;
 		}
 		
 		private function random(min:int, max:int):int
