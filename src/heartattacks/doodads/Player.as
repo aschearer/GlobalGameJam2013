@@ -31,6 +31,7 @@ package heartattacks.doodads
 		public var MaxCameraSpeed:Number = 8;
 		public var TurningSensitivity:Number = 60;
 		
+		public var HeartBeatCallback:Function;
 		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;
 		public var heading:Number = Math.PI / 2;
@@ -102,6 +103,11 @@ package heartattacks.doodads
 				this.timeTillNextHeartBeat -= this.HeartRate;
 				this.CurrentScore += this.ScorePerBeat;
 				this.heart.beat(0.5);
+				if (this.HeartBeatCallback != null)
+				{
+					this.HeartBeatCallback();
+				}
+				
 				Music.heartbeat.play();
 			}
 			
@@ -153,7 +159,7 @@ package heartattacks.doodads
 			this.heart.graphic.scrollY = 0;
 		}
 		
-		private function percentageToGirl():Number
+		public function percentageToGirl():Number
 		{
 			var distanceToGirl:Number = Math.pow(this.girl.x - this.x, 2) + Math.pow(this.girl.y - this.y, 2);
 			var totalDistance:Number = FP.height * FP.height;
