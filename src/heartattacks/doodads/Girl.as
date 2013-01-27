@@ -42,6 +42,7 @@ package heartattacks.doodads
 			this.timeSinceLastMove  = 0;
 			this.percentageToBoy = 0;
 			
+			
 			this.TrailWidth = this.width;
 		}
 		
@@ -54,6 +55,7 @@ package heartattacks.doodads
 		
 		override public function update():void
 		{
+			
 			this.timeSinceLastMove += 1 / 60;
 			var bonusModifier:Number = 1 - .1 * this.percentageToBoy;
 			if (this.timeSinceLastMove >= this.TimeTillNextMove * bonusModifier)

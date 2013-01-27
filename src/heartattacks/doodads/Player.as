@@ -70,6 +70,7 @@ package heartattacks.doodads
 				this.timeTillNextHeartBeat -= this.HeartRate;
 				this.CurrentScore += this.ScorePerBeat;
 				this.heart.beat(0.5);
+				Music.heartbeat.play();
 			}
 			
 			if (Input.pressed(Key.SPACE))
