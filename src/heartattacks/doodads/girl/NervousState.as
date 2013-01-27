@@ -49,7 +49,7 @@ package heartattacks.doodads.girl
 		{
 			var player:Player = Player(FP.world.getInstance("player"));
 			var distance:Number = Math.sqrt(Math.pow(player.x - this.girl.x, 2) + Math.pow(player.y - this.girl.y, 2));
-			if (distance < 200)
+			if (distance < this.girl.SensitiveArea)
 			{
 				this.strikeTimer -= 1 / 60;
 				if (this.strikeTimer <= 0)
