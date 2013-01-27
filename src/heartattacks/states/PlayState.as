@@ -8,7 +8,6 @@ package heartattacks.states
 	import heartattacks.doodads.Player;
 	import heartattacks.doodads.Girl;
 	import heartattacks.Level;
-	import heartattacks.TestingGui;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
@@ -33,7 +32,6 @@ package heartattacks.states
 		[Embed(source = "../../../res/tilemaps/TestLevel.oel", mimeType = "application/octet-stream")]
 		private var Map:Class;
 		private var level:Level;
-		private var testGui:TestingGui;
 		
 		public override function begin():void
 		{
@@ -46,7 +44,6 @@ package heartattacks.states
 			
 			if (Input.pressed(Key.F5))
 			{
-				FP.stage.removeChild(this.testGui);
 				var oldPlayer:Player = this.level.player;
 				var oldGirl:Girl = this.level.girl;
 				this.removeAll();
@@ -89,9 +86,6 @@ package heartattacks.states
 				this.level.player.MaxCameraSpeed = oldPlayer.MaxCameraSpeed;
 				this.level.girl.TimeTillNextMove = oldGirl.TimeTillNextMove;
 			}
-			
-			this.testGui = new TestingGui(this.level.player, this.level.girl);
-			FP.stage.addChild(this.testGui);
 		}
 	}
 }
