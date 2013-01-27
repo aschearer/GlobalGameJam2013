@@ -1,5 +1,6 @@
 package heartattacks.states 
 {
+	import heartattacks.doodads.Music;
 	import heartattacks.Objects.CreditsButton;
 	import heartattacks.Objects.FaceBook;
 	import heartattacks.Objects.MenuScreen;
@@ -12,16 +13,19 @@ package heartattacks.states
 	import net.flashpunk.utils.Input
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.utils.Draw
+	import net.flashpunk.Sfx;
 	/**
 	 * ...
 	 * @author The Heart Attacks
 	 */
 	public class MenuState extends World
 	{
+		
 		private var bButtons:MenuScreen;
 		private var credits:CreditsButton;
 		private var faceBook:FaceBook;
 		private var twitter:Twitter;
+
 		
 		public function MenuState() 
 		{
@@ -36,8 +40,13 @@ package heartattacks.states
 			
 			this.twitter = new Twitter(600, 300);
 			this.add(this.twitter);
+		
+			
+			Music.lobby.loop();
 			
 		}
+		
+		
 		
 	}
 

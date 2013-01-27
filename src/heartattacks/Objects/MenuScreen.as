@@ -1,5 +1,6 @@
 package heartattacks.Objects 
 {
+	import heartattacks.doodads.Music;
     import net.flashpunk.FP;
     import flash.geom.Rectangle;
 	import heartattacks.states.MenuState;
@@ -21,6 +22,8 @@ package heartattacks.Objects
 		[Embed(source = "../../../res/Buttons/start_down.png")] protected var UpImage:Class;
 		private var upImage:Image;
 		private var downImage:Image;
+
+
 		
 		public function MenuScreen(x:Number,y:Number) 
 		{
@@ -32,6 +35,8 @@ package heartattacks.Objects
 			this.downImage = new Image(DownImage);
 			this.setHitbox(223, 73);
 			this.graphic = this.upImage;
+			
+		    
 		}
 		
 		override public function render():void
@@ -46,6 +51,7 @@ package heartattacks.Objects
 			{
 				if (Input.mousePressed)
 				{
+					Music.lobby.stop();
 					this.UpImage = this.DownImage;
 					FP.world = new PlayState();
 				}
