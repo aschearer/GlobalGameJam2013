@@ -20,7 +20,7 @@ package heartattacks.doodads
 		{
 			super(x - 12 + this.random(-4, 4), y + FP.camera.y - 12 + this.random(-4, 4));
 			this.setHitbox(24, 24);
-			this.layer = 2;
+			this.layer = 8;
 			this.type = "marker";
 			var image:Image = new Image(MarkerImage);
 			image.angle = this.random(0, 2 * Math.PI);
