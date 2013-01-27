@@ -54,7 +54,7 @@ package heartattacks.doodads.girl
 				this.strikeTimer -= 1 / 60;
 				if (this.strikeTimer <= 0)
 				{
-					this.callback("startled-state");
+					this.callback("angry-state");
 				}
 			}
 		}
