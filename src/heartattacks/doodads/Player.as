@@ -9,10 +9,7 @@ package heartattacks.doodads
 	import net.flashpunk.utils.Draw
 	import net.flashpunk.FP;
 
-	/**
-	 * ...
-	 * @author The Heart Attacks
-	 */
+	
 	 
 	public class Player extends Entity
 	{

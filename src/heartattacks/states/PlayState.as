@@ -1,5 +1,9 @@
+
 package heartattacks.states 
 {
+	import heartattacks.doodads.Music;
+	import flash.net.SharedObject;
+	import net.flashpunk.*;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.net.URLLoader;
@@ -15,10 +19,9 @@ package heartattacks.states
 	import net.flashpunk.masks.Grid;
 	import net.flashpunk.World;
 	import net.flashpunk.FP;
-	import net.flashpunk.utils.Draw;
-	import net.flashpunk.utils.Input;
-	import net.flashpunk.utils.Key;
+	import net.flashpunk.utils.*;
 	import com.bit101.components.Slider;
+	
 	
 	/**
 	 * ...
@@ -32,16 +35,22 @@ package heartattacks.states
 		[Embed(source = "../../../res/tilemaps/TestLevel.oel", mimeType = "application/octet-stream")]
 		private var Map:Class;
 		private var level:Level;
+		private var saveDataObject:SharedObject = SharedObject.getLocal("heart");
+
 		
 		public override function begin():void
 		{
 			this.createLevel(null, null);
 		}
 		
+	
+		Music.gameplay.loop(0.25);
+		
+		
 		override public function update():void
 		{
 			super.update();
-			
+		    
 			if (Input.pressed(Key.F5))
 			{
 				var oldPlayer:Player = this.level.player;
@@ -49,6 +58,11 @@ package heartattacks.states
 				this.removeAll();
 				this.createLevel(oldPlayer, oldGirl);
 			}
+		}
+		private function SaveGame()
+		{
+		
+			
 		}
 		
 		private function CanGirlSeePlayer():Boolean
