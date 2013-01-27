@@ -35,7 +35,9 @@ package heartattacks.states
 		
 		public override function begin():void
 		{
-			
+			Music.gameplay.stop();
+			Music.heartbeat.stop();
+			Music.gameover.loop();
 		}
 		
 	}

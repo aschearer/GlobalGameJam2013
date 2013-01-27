@@ -48,7 +48,6 @@ package heartattacks.Objects
 			{
 				if (Input.mousePressed)
 				{
-					Music.gameover.stop();
 					this.reUpImage = this.reDownImage;
 					FP.world = new MenuState();
 				}
