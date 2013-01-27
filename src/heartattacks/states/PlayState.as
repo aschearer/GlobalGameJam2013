@@ -98,7 +98,6 @@ package heartattacks.states
 				this.level.player.ScorePerBeat = oldPlayer.ScorePerBeat;
 				this.level.player.MinCameraSpeed = oldPlayer.MinCameraSpeed;
 				this.level.player.MaxCameraSpeed = oldPlayer.MaxCameraSpeed;
-				this.level.girl.TimeTillNextMove = oldGirl.TimeTillNextMove;
 			}
 		}
 	}

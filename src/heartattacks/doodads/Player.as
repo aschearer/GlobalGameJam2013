@@ -31,7 +31,7 @@ package heartattacks.doodads
 		private var girl:Girl;
 		private var heart:HeartMeter;
 		private var runTime:Number = 0;
-		private var isWaiting:Boolean;
+		public var isWaiting:Boolean;
 		private var timeTillBonusExpires:Number = 2;
 		
 		public function Player(girl:Girl, heart:HeartMeter) 
@@ -48,6 +48,7 @@ package heartattacks.doodads
 			this.spritemap.play("walk-forward");
 			this.setHitbox(128, 128);
 			this.layer = 2;
+			this.name = "player";
 		}
 		
 		override public function update():void
@@ -80,13 +81,16 @@ package heartattacks.doodads
 			var playerSpeed:Number = playerDistanceFromCenter / FP.halfHeight * currentSpeed;
 			var girlDistanceFromCenter:Number = FP.halfHeight - this.girl.centerY;
 			var girlSpeed:Number = girlDistanceFromCenter / FP.halfHeight * currentSpeed;
-			this.girl.moveBy(0, sign * girlSpeed, "level");
-			
 			var distanceToGirl:Number = Math.pow(this.girl.x - this.x, 2) + Math.pow(this.girl.y - this.y, 2);
 			var totalDistance:Number = FP.height * FP.height;
 			var percentToGirl:Number = Math.min(1, Math.max(0, (totalDistance - distanceToGirl) / totalDistance));
 			var deltaSpeed:Number = this.MaxCameraSpeed - this.MinCameraSpeed;			
 			var cameraSpeed:Number = currentSpeed * ((deltaSpeed * this.percentageToGirl()) + this.MinCameraSpeed);
+			if (this.girl.isWaiting)
+			{
+				cameraSpeed = 0;
+			}
+			
 			FP.camera.y += cameraSpeed;
 			if (!this.isWaiting)
 			{
@@ -95,6 +99,15 @@ package heartattacks.doodads
 			else
 			{
 				this.moveBy(0, -cameraSpeed, "level");
+			}
+			
+			if (!this.girl.isWaiting)
+			{
+				this.girl.moveBy(0, sign * girlSpeed, "level");
+			}
+			else
+			{
+				this.girl.moveBy(0, -cameraSpeed, "level");
 			}
 			
 			this.graphic.scrollY = 0;
@@ -127,8 +140,12 @@ package heartattacks.doodads
 			{
 				if (this.isWaiting || this.collidePoint(this.x, this.y, Input.mouseX, Input.mouseY))
 				{
-					this.spritemap.play("stand-forward");
-					this.isWaiting = true;
+					if (this.spritemap.currentAnim != "stand-forward")
+					{
+						this.spritemap.play("stand-forward");
+						this.isWaiting = true;
+						trace("stand-forward");
+					}
 				}
 				else
 				{
@@ -147,10 +164,11 @@ package heartattacks.doodads
 						this.spritemap.flipped = true;
 						this.spritemap.play("walk-side");
 					}
-					else
+					else if (this.spritemap.currentAnim != "walk-forward")
 					{
 						this.spritemap.flipped = false;
 						this.spritemap.play("walk-forward");
+						trace("walk-forward");
 					}
 				}
 			}
@@ -158,63 +176,11 @@ package heartattacks.doodads
 			{
 				this.isWaiting = false;
 				this.heading = Math.PI / 2;
-				this.spritemap.play("walk-forward");
-			}
-		}
-		
-		private function processArrowControls():void
-		{
-			if (Input.check(Key.LEFT))
-			{
-				this.steer(1, this.TurningSpeed * 2);
-			}
-			if (Input.check(Key.RIGHT))
-			{
-				this.steer(-1, this.TurningSpeed * 2);
-			}
-			
-			this.isWaiting = Input.check(Key.SPACE);
-			if (this.isWaiting)
-			{
-				this.spritemap.play("stand-forward");
-			}
-			else if (Input.released(Key.SPACE))
-			{
-				this.spritemap.play("walk-forward");
-			}
-		}
-		
-		private function steer(direction:int, torque:Number):void
-		{
-			this.heading += direction * Math.PI / torque;
-		}
-		
-		private function normalizeHeading():void
-		{
-			this.heading = (Math.PI * 2 + this.heading) % (Math.PI * 2);
-			if (this.heading < Math.PI / 4)
-			{
-				this.heading = Math.PI / 4;
-			}
-			else if (this.heading > 3 * Math.PI / 4)
-			{
-				this.heading = 3 * Math.PI / 4;
-			}
-			
-			if (this.heading < Math.PI / 2 - Math.PI / 6)
-			{
-				this.spritemap.flipped = false;
-				this.spritemap.play("walk-side");
-			}
-			else if (this.heading > Math.PI / 2 + Math.PI / 6)
-			{
-				this.spritemap.flipped = true;
-				this.spritemap.play("walk-side");
-			}
-			else
-			{
-				this.spritemap.flipped = false;
-				this.spritemap.play("walk-forward");
+				if (this.spritemap.currentAnim != "walk-forward")
+				{
+					this.spritemap.play("walk-forward");
+					trace("walk-forward");
+				}
 			}
 		}
 	}
