@@ -18,11 +18,10 @@ package heartattacks.doodads
 	{
 		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
 		
-		private var MouseControlsEnabled:Boolean = false;
-		private var ArrowControlsEnabled:Boolean = false;
+		private var ControlsEnabled:Boolean = false;
 		
 		public var MovementSpeed:Number = 2;
-		public var TurningSpeed:Number = 128;
+		public var TurningSpeed:Number = 32;
 		public var SpeedBonus:Number = 4;
 		public var CurrentScore:uint = 0;
 		public var HeartRate:Number = 1;
@@ -75,15 +74,12 @@ package heartattacks.doodads
 			
 			if (Input.pressed(Key.SPACE))
 			{
-				MouseControlsEnabled = !MouseControlsEnabled;
+				ControlsEnabled = !ControlsEnabled;
 			}
 			
-			if (ArrowControlsEnabled)
+			if (ControlsEnabled)
 			{
 				this.processArrowControls();
-			}
-			else if (MouseControlsEnabled)
-			{
 				this.processMouseControls();
 			}
 			
@@ -128,68 +124,50 @@ package heartattacks.doodads
 			if (Input.mouseDown && Input.mouseX)
 			{
 				var deltaX:Number = Input.mouseX < this.x ? 1 : -1;
-				/*
-				if (deltaX > 0)
-				{
-					this.heading = Math.min(Math.PI * 2, this.heading + Math.PI / this.TurningSpeed);
-				}
-				else
-				{
-					this.heading = Math.min(Math.PI, this.heading - Math.PI / this.TurningSpeed);
-				}
-				*/
-				
-				this.heading += deltaX * Math.PI / this.TurningSpeed;
-				this.heading = (Math.PI * 2 + this.heading) % (Math.PI * 2);
-				if (this.heading < Math.PI / 4)
-				{
-					this.heading = Math.PI / 4;
-				}
-				else if (this.heading > 3 * Math.PI / 4)
-				{
-					this.heading = 3 * Math.PI / 4;
-				}
-				
-				if (this.heading < Math.PI / 2 - Math.PI / 6)
-				{
-					this.spritemap.flipped = false;
-					this.spritemap.play("walk-side");
-				}
-				else if (this.heading > Math.PI / 2 + Math.PI / 6)
-				{
-					this.spritemap.flipped = true;
-					this.spritemap.play("walk-side");
-				}
-				else
-				{
-					this.spritemap.flipped = false;
-					this.spritemap.play("walk-forward");
-				}
+				this.steer(deltaX, this.TurningSpeed);
 			}
 		}
 		
 		private function processArrowControls():void
 		{
-			var deltaX:Number = 0;
-			var deltaY:Number = 0;
 			if (Input.check(Key.LEFT))
 			{
-				deltaX -= 2;
+				this.steer(1, this.TurningSpeed * 2);
 			}
 			if (Input.check(Key.RIGHT))
 			{
-				deltaX += 2;
+				this.steer(-1, this.TurningSpeed * 2);
 			}
-			if (Input.check(Key.UP))
+		}
+		
+		private function steer(direction:int, torque:Number):void
+		{
+			this.heading += direction * Math.PI / torque;
+			this.heading = (Math.PI * 2 + this.heading) % (Math.PI * 2);
+			if (this.heading < Math.PI / 4)
 			{
-				deltaY -= 2;
+				this.heading = Math.PI / 4;
 			}
-			if (Input.check(Key.DOWN))
+			else if (this.heading > 3 * Math.PI / 4)
 			{
-				deltaY += 2;
+				this.heading = 3 * Math.PI / 4;
 			}
 			
-			this.moveBy(deltaX, deltaY, "level");
+			if (this.heading < Math.PI / 2 - Math.PI / 6)
+			{
+				this.spritemap.flipped = false;
+				this.spritemap.play("walk-side");
+			}
+			else if (this.heading > Math.PI / 2 + Math.PI / 6)
+			{
+				this.spritemap.flipped = true;
+				this.spritemap.play("walk-side");
+			}
+			else
+			{
+				this.spritemap.flipped = false;
+				this.spritemap.play("walk-forward");
+			}
 		}
 	}
 }

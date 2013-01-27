@@ -46,7 +46,7 @@ package heartattacks.states
 			
 			if (Input.pressed(Key.F5))
 			{
-				//FP.stage.removeChild(this.testGui);
+				FP.stage.removeChild(this.testGui);
 				var oldPlayer:Player = this.level.player;
 				var oldGirl:Girl = this.level.girl;
 				this.removeAll();
@@ -90,8 +90,8 @@ package heartattacks.states
 				this.level.girl.TimeTillNextMove = oldGirl.TimeTillNextMove;
 			}
 			
-			//this.testGui = new TestingGui(this.level.player, this.level.girl);
-			//FP.stage.addChild(this.testGui);
+			this.testGui = new TestingGui(this.level.player, this.level.girl);
+			FP.stage.addChild(this.testGui);
 		}
 	}
 }
