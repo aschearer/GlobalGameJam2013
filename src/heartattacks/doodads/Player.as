@@ -79,8 +79,8 @@ package heartattacks.doodads
 				this.heart.beat(0.5);
 			}
 			
-			this.processArrowControls();
 			this.processMouseControls();
+			//this.processArrowControls();
 			
 			this.runTime += 1 / 60;
 			var currentSpeed:Number = this.MovementSpeed;
@@ -133,10 +133,42 @@ package heartattacks.doodads
 		
 		private function processMouseControls():void
 		{
-			if (Input.mouseDown && Input.mouseX)
+			if (Input.mouseDown)
 			{
-				var deltaX:Number = Input.mouseX < this.x ? 1 : -1;
-				this.steer(deltaX, this.TurningSpeed);
+				if (this.collidePoint(this.x, this.y, Input.mouseX, Input.mouseY))
+				{
+					this.spritemap.play("stand-forward");
+					this.isWaiting = true;
+				}
+				else
+				{
+					this.isWaiting = false;
+					var dx:Number = Input.mouseX - this.centerX;
+					var dy:Number = Input.mouseY - this.centerY;
+					var theta:Number = Math.atan2(dy, dx);
+					this.heading = theta;
+					if (this.heading < Math.PI / 2 - Math.PI / 8)
+					{
+						this.spritemap.flipped = false;
+						this.spritemap.play("walk-side");
+					}
+					else if (this.heading > Math.PI / 2 + Math.PI / 8)
+					{
+						this.spritemap.flipped = true;
+						this.spritemap.play("walk-side");
+					}
+					else
+					{
+						this.spritemap.flipped = false;
+						this.spritemap.play("walk-forward");
+					}
+				}
+			}
+			else
+			{
+				this.isWaiting = false;
+				this.heading = Math.PI / 2;
+				this.spritemap.play("walk-forward");
 			}
 		}
 		
@@ -165,6 +197,10 @@ package heartattacks.doodads
 		private function steer(direction:int, torque:Number):void
 		{
 			this.heading += direction * Math.PI / torque;
+		}
+		
+		private function normalizeHeading():void
+		{
 			this.heading = (Math.PI * 2 + this.heading) % (Math.PI * 2);
 			if (this.heading < Math.PI / 4)
 			{
