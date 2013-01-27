@@ -53,14 +53,6 @@ package heartattacks.doodads
 			this.layer = 2;
 		}
 		
-		override public function render():void
-		{
-			super.render();
-			var dx:Number = centerX + Math.cos(this.heading) * 100;
-			var dy:Number = centerY + Math.sin(this.heading) * 100;
-			Draw.line(this.centerX, this.centerY + FP.camera.y, dx, dy + FP.camera.y);
-		}
-		
 		override public function update():void
 		{
 			if (this.timeTillBonusExpires > 0)
@@ -135,7 +127,7 @@ package heartattacks.doodads
 		{
 			if (Input.mouseDown)
 			{
-				if (this.collidePoint(this.x, this.y, Input.mouseX, Input.mouseY))
+				if (this.isWaiting || this.collidePoint(this.x, this.y, Input.mouseX, Input.mouseY))
 				{
 					this.spritemap.play("stand-forward");
 					this.isWaiting = true;
