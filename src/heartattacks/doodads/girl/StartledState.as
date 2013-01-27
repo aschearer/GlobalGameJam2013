@@ -5,6 +5,7 @@ package heartattacks.doodads.girl
 	import heartattacks.doodads.Player;
 	import heartattacks.doodads.Girl;
 	import net.flashpunk.graphics.Spritemap;
+	import heartattacks.doodads.Marker;
 	
 	/**
 	 * ...
@@ -57,7 +58,6 @@ package heartattacks.doodads.girl
 				}
 			}
 		}
-		
 	}
 
 }

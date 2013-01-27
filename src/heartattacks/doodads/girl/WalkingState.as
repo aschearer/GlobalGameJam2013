@@ -50,7 +50,7 @@ package heartattacks.doodads.girl
 		{
 			var player:Player = Player(FP.world.getInstance("player"));
 			var distance:Number = Math.sqrt(Math.pow(player.x - this.girl.x, 2) + Math.pow(player.y - this.girl.y, 2));
-			if (distance < this.girl.AwarenessArea)
+			if (distance < this.girl.AwarenessArea && !player.isDead)
 			{
 				if (Math.random() > .9)
 				{

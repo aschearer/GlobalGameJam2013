@@ -1,6 +1,7 @@
 package heartattacks.doodads 
 {
 	import flash.geom.Rectangle;
+	import heartattacks.doodads.player.DyingState;
 	import heartattacks.doodads.player.MovingState;
 	import heartattacks.doodads.player.ScaredState;
 	import heartattacks.doodads.player.StandingState;
@@ -19,7 +20,7 @@ package heartattacks.doodads
 	{
 		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
 		
-		public var MovementSpeed:Number = 0.7;
+		public var MovementSpeed:Number = 1.2;
 		public var TurningSpeed:Number = 30;
 		public var SpeedBonus:Number = 4;
 		public var CurrentScore:uint = 0;
@@ -50,7 +51,7 @@ package heartattacks.doodads
 			this.spritemap.add("stand-forward", [7, 8, 9, 10, 11], 12, true);
 			this.spritemap.add("stand-side", [1, 2, 3, 4, 5], 12, true);
 			this.spritemap.add("scared", [23, 24, 25, 26, 27, 28, 29, 30], 12, true);
-			this.spritemap.add("death", [32, 33, 34, 35, 36, 37, 38, 39], 12, false);
+			this.spritemap.add("dying", [32, 33, 34, 35, 36, 37, 38, 39], 12, false);
 			this.graphic = this.spritemap;
 			this.setHitbox(128, 128);
 			this.layer = 2;
@@ -59,6 +60,12 @@ package heartattacks.doodads
 			this.states.addState("walking-state", new MovingState(this, girl));
 			this.states.addState("standing-state", new StandingState());
 			this.states.addState("scared-state", new ScaredState());
+			this.states.addState("dying-state", new DyingState());
+		}
+		
+		public function get isDead():Boolean
+		{
+			return this.states.state == "dying-state";
 		}
 		
 		override public function update():void
@@ -74,7 +81,7 @@ package heartattacks.doodads
 			var adjustedTime:Number = 1 / 60 + 2 / 60 * this.percentageToGirl();
 			
 			this.timeTillNextHeartBeat += adjustedTime;
-			if (this.timeTillNextHeartBeat >= this.HeartRate)
+			if (this.states.state != "dying-state" && this.timeTillNextHeartBeat >= this.HeartRate)
 			{
 				this.timeTillNextHeartBeat -= this.HeartRate;
 				this.CurrentScore += this.ScorePerBeat;
@@ -101,7 +108,7 @@ package heartattacks.doodads
 			}
 			
 			FP.camera.y += cameraSpeed;
-			if (this.states.state != "scared-state")
+			if (this.states.state != "scared-state" && this.states.state != "dying-state")
 			{
 				this.moveBy(8 * Math.cos(this.heading) * playerSpeed, sign * Math.sin(this.heading) * playerSpeed, "level");
 			}

@@ -35,7 +35,7 @@ package heartattacks.doodads.player
 			this.processInput(spritemap);
 			if (this.girl.isWatching)
 			{
-				this.callback("scared-state");
+				this.callback("dying-state");
 			}
 		}
 		
