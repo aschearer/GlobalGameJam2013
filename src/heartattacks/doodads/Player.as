@@ -12,6 +12,7 @@ package heartattacks.doodads
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.utils.Draw
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Text;
 
 	
 	 
@@ -37,6 +38,9 @@ package heartattacks.doodads
 		private var runTime:Number = 0;
 		private var timeTillBonusExpires:Number = 2;
 		private var states:StateMachine;
+		
+		
+		
 		
 		public function Player(girl:Girl, heart:HeartMeter) 
 		{
@@ -125,6 +129,9 @@ package heartattacks.doodads
 			this.heart.y = this.y - 40;
 			this.heart.graphic.scrollY = 0;
 		}
+		
+		
+		
 		
 		private function percentageToGirl():Number
 		{

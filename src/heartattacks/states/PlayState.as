@@ -35,12 +35,18 @@ package heartattacks.states
 		[Embed(source = "../../../res/tilemaps/TestLevel.oel", mimeType = "application/octet-stream")]
 		private var Map:Class;
 		private var level:Level;
-		private var saveDataObject:SharedObject = SharedObject.getLocal("heart");
+		//private var saveDataObject:SharedObject = SharedObject.getLocal("heart");
+		private var score:Score;
+
 
 		
 		public override function begin():void
 		{
 			this.createLevel(null, null);
+			this.score = new Score(this.level.player);
+
+			add(score);
+		
 		}
 		
 	
@@ -49,8 +55,9 @@ package heartattacks.states
 		
 		override public function update():void
 		{
+			
 			super.update();
-		    
+		
 			if (Input.pressed(Key.F5))
 			{
 				var oldPlayer:Player = this.level.player;
@@ -59,12 +66,7 @@ package heartattacks.states
 				this.createLevel(oldPlayer, oldGirl);
 			}
 		}
-		private function SaveGame()
-		{
-		
-			
-		}
-		
+
 		private function CanGirlSeePlayer():Boolean
 		{
 			var point:Point = new Point();
