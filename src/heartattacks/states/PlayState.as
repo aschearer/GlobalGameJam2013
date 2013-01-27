@@ -3,6 +3,7 @@ package heartattacks.states
 {
 	import heartattacks.doodads.Music;
 	import flash.net.SharedObject;
+	import heartattacks.TestingGui;
 	import net.flashpunk.*;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -36,11 +37,14 @@ package heartattacks.states
 		private var Map:Class;
 		private var level:Level;
 		private var saveDataObject:SharedObject = SharedObject.getLocal("heart");
+		private var testGui:TestingGui;
 
 		
 		public override function begin():void
 		{
 			this.createLevel(null, null);
+			this.testGui = new TestingGui(this.level.player, this.level.girl);
+			FP.stage.addChild(this.testGui);
 		}
 		
 	
@@ -57,6 +61,10 @@ package heartattacks.states
 				var oldGirl:Girl = this.level.girl;
 				this.removeAll();
 				this.createLevel(oldPlayer, oldGirl);
+				
+				FP.stage.removeChild(this.testGui);
+				this.testGui = new TestingGui(this.level.player, this.level.girl);
+				FP.stage.addChild(this.testGui);
 			}
 		}
 		private function SaveGame()
