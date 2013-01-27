@@ -73,16 +73,19 @@ package heartattacks.states
 				FP.stage.addChild(this.testGui);
 			
 			}	
+			
+			
 				
 			if (FP.camera.y >= 6000)
 				{
 					FP.camera.y = 0;
 				}
 				
-				if (this.level.player.distanceTraveled = 1000)
+			if (this.level.player.distanceTraveled >= 100)
 				{
-					//FP.world = 
-				}
+					FP.world = new VictoryState(); 
+				}	
+				
 		}
 		
 	

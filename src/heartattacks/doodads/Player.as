@@ -129,7 +129,8 @@ package heartattacks.doodads
 			}
 			
 			FP.camera.y += cameraSpeed;
-			distanceTraveled += cameraSpeed;
+			distanceTraveled = FP.camera.y;
+
 			if (this.states.state != "scared-state" && this.states.state != "dying-state")
 			{
 				var bonus:Number = this.timeTillBonusExpires > 0 ? this.SpeedBonus : 1;

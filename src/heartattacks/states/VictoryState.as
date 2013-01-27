@@ -2,6 +2,7 @@ package heartattacks.states
 {
 	import heartattacks.doodads.Music;
 	import flash.net.SharedObject;
+	import heartattacks.Objects.VictoryMov;
 	import heartattacks.TestingGui;
 	import net.flashpunk.*;
 	import flash.events.Event;
@@ -27,11 +28,18 @@ package heartattacks.states
 	 */
 	public class VictoryState extends World
 	{
+		private var victory:VictoryMov;
 		
 		public function VictoryState() 
 		{
+			Music.gameplay.stop();
+			Music.heartbeat.stop();
 			
+			this.victory = new VictoryMov(0, 0);
+			this.add(this.victory);
 		}
+		
+		
 		
 	}
 
