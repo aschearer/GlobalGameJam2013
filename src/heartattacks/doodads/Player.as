@@ -1,6 +1,7 @@
 package heartattacks.doodads 
 {
 	import flash.geom.Rectangle;
+	import heartattacks.doodads.player.DyingState;
 	import heartattacks.doodads.player.MovingState;
 	import heartattacks.doodads.player.ScaredState;
 	import heartattacks.doodads.player.StandingState;
@@ -20,14 +21,16 @@ package heartattacks.doodads
 	{
 		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
 		
-		public var MovementSpeed:Number = 0.7;
-		public var TurningSpeed:Number = 30;
-		public var SpeedBonus:Number = 4;
+		public var MovementSpeed:Number = .7;
+		public var TurningSpeed:Number = 100;
+		public var SpeedBonus:Number = 3.4;
+		public var HorizontalBoost:Number = 8;
 		public var CurrentScore:uint = 0;
 		public var HeartRate:Number = 1;
 		public var ScorePerBeat:int = 100;
-		public var MinCameraSpeed:Number = 1;
-		public var MaxCameraSpeed:Number = 3;
+		public var MinCameraSpeed:Number = 3;
+		public var MaxCameraSpeed:Number = 8;
+		public var TurningSensitivity:Number = 60;
 		
 		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;
@@ -54,7 +57,8 @@ package heartattacks.doodads
 			this.spritemap.add("stand-forward", [7, 8, 9, 10, 11], 12, true);
 			this.spritemap.add("stand-side", [1, 2, 3, 4, 5], 12, true);
 			this.spritemap.add("scared", [23, 24, 25, 26, 27, 28, 29, 30], 12, true);
-			this.spritemap.add("death", [32, 33, 34, 35, 36, 37, 38, 39], 12, false);
+			this.spritemap.add("dying", [32, 33, 34, 35, 36, 37, 38, 39], 12, false);
+			this.spritemap.play("walk-forward");
 			this.graphic = this.spritemap;
 			this.setHitbox(128, 128);
 			this.layer = 2;
@@ -63,6 +67,25 @@ package heartattacks.doodads
 			this.states.addState("walking-state", new MovingState(this, girl));
 			this.states.addState("standing-state", new StandingState());
 			this.states.addState("scared-state", new ScaredState());
+			this.states.addState("dying-state", new DyingState());
+		}
+		
+		override public function render():void 
+		{
+			super.render();
+			var dx:Number = Math.cos(this.heading) * 50 + FP.camera.x + this.centerX;
+			var dy:Number = Math.sin(this.heading) * 50 + FP.camera.y + this.centerY;
+			Draw.line(this.centerX + FP.camera.x, this.centerY + FP.camera.y, dx, dy);
+		}
+		
+		public function get isDead():Boolean
+		{
+			return this.states.state == "dying-state";
+		}
+		
+		public function get CurrentTurningSensitivity():Number
+		{
+			return (1 - this.percentageToGirl()) * this.TurningSensitivity;
 		}
 		
 		override public function update():void
@@ -78,7 +101,7 @@ package heartattacks.doodads
 			var adjustedTime:Number = 1 / 60 + 2 / 60 * this.percentageToGirl();
 			
 			this.timeTillNextHeartBeat += adjustedTime;
-			if (this.timeTillNextHeartBeat >= this.HeartRate)
+			if (this.states.state != "dying-state" && this.timeTillNextHeartBeat >= this.HeartRate)
 			{
 				this.timeTillNextHeartBeat -= this.HeartRate;
 				this.CurrentScore += this.ScorePerBeat;
@@ -97,7 +120,7 @@ package heartattacks.doodads
 			var distanceToGirl:Number = Math.pow(this.girl.x - this.x, 2) + Math.pow(this.girl.y - this.y, 2);
 			var totalDistance:Number = FP.height * FP.height;
 			var percentToGirl:Number = Math.min(1, Math.max(0, (totalDistance - distanceToGirl) / totalDistance));
-			var deltaSpeed:Number = this.MaxCameraSpeed - this.MinCameraSpeed;			
+			var deltaSpeed:Number = this.MaxCameraSpeed - this.MinCameraSpeed;
 			var cameraSpeed:Number = currentSpeed * ((deltaSpeed * this.percentageToGirl()) + this.MinCameraSpeed);
 			if (this.girl.isWaiting)
 			{
@@ -105,9 +128,13 @@ package heartattacks.doodads
 			}
 			
 			FP.camera.y += cameraSpeed;
-			if (this.states.state != "scared-state")
+			if (this.states.state != "scared-state" && this.states.state != "dying-state")
 			{
-				this.moveBy(8 * Math.cos(this.heading) * playerSpeed, sign * Math.sin(this.heading) * playerSpeed, "level");
+				var bonus:Number = this.timeTillBonusExpires > 0 ? this.SpeedBonus : 1;
+				this.moveBy(
+					this.HorizontalBoost * Math.cos(this.heading) * playerSpeed * bonus,
+					sign * Math.sin(this.heading) * playerSpeed * bonus, 
+					"level");
 			}
 			else
 			{

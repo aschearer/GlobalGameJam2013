@@ -26,6 +26,9 @@ package heartattacks.doodads
 		[Embed(source = "../../../res/spritesheets/Girl.png")] protected var GirlImage:Class;
 		private var spritemap:Spritemap;
 		
+		public var AwarenessArea:Number = 180;
+		public var SensitiveArea:Number = 90;
+		
 		private var timeToLetDownGaurd:Number = 0;
 		private var level:Level;
 		private var states:StateMachine;
@@ -54,7 +57,8 @@ package heartattacks.doodads
 		public override function render():void
 		{
 			super.render();
-			Draw.circle(this.centerX, this.centerY + FP.camera.y, 200);
+			Draw.circle(this.centerX, this.centerY + FP.camera.y, this.SensitiveArea);
+			Draw.circle(this.centerX, this.centerY + FP.camera.y, this.AwarenessArea);
 		}
 		
 		public function get isWaiting():Boolean

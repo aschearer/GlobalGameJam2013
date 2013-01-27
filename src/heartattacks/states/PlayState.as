@@ -3,6 +3,7 @@ package heartattacks.states
 {
 	import heartattacks.doodads.Music;
 	import flash.net.SharedObject;
+	import heartattacks.TestingGui;
 	import net.flashpunk.*;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -35,8 +36,9 @@ package heartattacks.states
 		[Embed(source = "../../../res/tilemaps/TestLevel.oel", mimeType = "application/octet-stream")]
 		private var Map:Class;
 		private var level:Level;
-		//private var saveDataObject:SharedObject = SharedObject.getLocal("heart");
 		private var score:Score;
+
+		private var testGui:TestingGui;
 
 
 		
@@ -44,9 +46,10 @@ package heartattacks.states
 		{
 			this.createLevel(null, null);
 			this.score = new Score(this.level.player);
-
 			add(score);
-		
+			this.testGui = new TestingGui(this.level.player, this.level.girl);
+			FP.stage.addChild(this.testGui);
+
 		}
 		
 	
@@ -64,6 +67,10 @@ package heartattacks.states
 				var oldGirl:Girl = this.level.girl;
 				this.removeAll();
 				this.createLevel(oldPlayer, oldGirl);
+				
+				FP.stage.removeChild(this.testGui);
+				this.testGui = new TestingGui(this.level.player, this.level.girl);
+				FP.stage.addChild(this.testGui);
 			}
 		}
 

@@ -63,27 +63,27 @@ package heartattacks
 				this.OnScorePerBeat);
 				
 			this.AddSlider(
-				"Speed Bonus",
+				"Turning Sensitivity",
 				10,
 				90,
+				10,
+				100,
+				this.player.TurningSensitivity,
+				this.OnTurnSensitivity);
+				
+			this.AddSlider(
+				"Speed Bonus",
+				10,
+				110,
 				2,
 				10,
 				this.player.SpeedBonus,
 				this.OnSpeedBonus);
 				
 			this.AddSlider(
-				"Time Till Lane Change",
-				10,
-				150,
-				0.25,
-				15,
-				this.girl.TimeTillNextMove,
-				this.OnLaneChange);
-				
-			this.AddSlider(
 				"Min Camera Speed",
 				10,
-				170,
+				130,
 				0,
 				4,
 				this.player.MinCameraSpeed,
@@ -92,11 +92,17 @@ package heartattacks
 			this.AddSlider(
 				"Max Camera Speed",
 				10,
-				190,
+				150,
 				1,
 				10,
 				this.player.MaxCameraSpeed,
 				this.OnMaxCameraSpeed);
+		}
+		
+		private function OnTurnSensitivity(e:Event):void 
+		{
+			var slider:HUISlider = HUISlider(e.target);
+			this.player.TurningSensitivity = slider.value;
 		}
 		
 		private function AddSlider(label:String, x:int, y:int, min:Number, max:Number, current:Number, handler:Function):void
@@ -148,12 +154,6 @@ package heartattacks
 		{
 			var slider:HUISlider = HUISlider(e.target);
 			this.player.MaxCameraSpeed  = slider.value;
-		}
-		
-		private function OnLaneChange(e:Event):void
-		{
-			var slider:HUISlider = HUISlider(e.target);
-			this.girl.TimeTillNextMove = slider.value;
 		}
 	}
 }
