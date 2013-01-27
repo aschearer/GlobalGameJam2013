@@ -2,6 +2,7 @@ package heartattacks.doodads.player
 {
 	import heartattacks.doodads.states.IState;
 	import net.flashpunk.graphics.Spritemap;
+	import com.greensock.TweenLite;
 	/**
 	 * ...
 	 * @author The Heart Attacks
@@ -18,6 +19,7 @@ package heartattacks.doodads.player
 		public function onEnter(spritemap:Spritemap):void 
 		{
 			spritemap.play("dying");
+			TweenLite.to(spritemap, 1, { alpha: 0, delay: 1 } );
 		}
 		
 		public function update(spritemap:Spritemap):void 

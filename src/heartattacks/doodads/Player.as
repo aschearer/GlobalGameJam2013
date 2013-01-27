@@ -20,9 +20,10 @@ package heartattacks.doodads
 	{
 		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
 		
-		public var MovementSpeed:Number = 1.2;
+		public var MovementSpeed:Number = .7;
 		public var TurningSpeed:Number = 30;
 		public var SpeedBonus:Number = 4;
+		public var HorizontalBoost:Number = 8;
 		public var CurrentScore:uint = 0;
 		public var HeartRate:Number = 1;
 		public var ScorePerBeat:int = 100;
@@ -100,7 +101,7 @@ package heartattacks.doodads
 			var distanceToGirl:Number = Math.pow(this.girl.x - this.x, 2) + Math.pow(this.girl.y - this.y, 2);
 			var totalDistance:Number = FP.height * FP.height;
 			var percentToGirl:Number = Math.min(1, Math.max(0, (totalDistance - distanceToGirl) / totalDistance));
-			var deltaSpeed:Number = this.MaxCameraSpeed - this.MinCameraSpeed;			
+			var deltaSpeed:Number = this.MaxCameraSpeed - this.MinCameraSpeed;
 			var cameraSpeed:Number = currentSpeed * ((deltaSpeed * this.percentageToGirl()) + this.MinCameraSpeed);
 			if (this.girl.isWaiting)
 			{
@@ -110,7 +111,7 @@ package heartattacks.doodads
 			FP.camera.y += cameraSpeed;
 			if (this.states.state != "scared-state" && this.states.state != "dying-state")
 			{
-				this.moveBy(8 * Math.cos(this.heading) * playerSpeed, sign * Math.sin(this.heading) * playerSpeed, "level");
+				this.moveBy(this.HorizontalBoost * Math.cos(this.heading) * playerSpeed, sign * Math.sin(this.heading) * playerSpeed, "level");
 			}
 			else
 			{

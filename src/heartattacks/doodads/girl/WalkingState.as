@@ -19,6 +19,7 @@ package heartattacks.doodads.girl
 		private var timeSinceLastMove:Number = 0;
 		private var timeTillMarker:Number = 0.1;
 		private var timeToMarker:Number = 0;
+		private var timeTillNextGamble:Number = 0;
 		private var girl:Girl;
 		private var level:Level;
 		private var callback:Function;
@@ -44,6 +45,20 @@ package heartattacks.doodads.girl
 			this.emitMarker();
 			this.lookForBadGuys();
 			this.changeColumns();
+			this.gamble();
+		}
+		
+		private function gamble():void
+		{
+			this.timeTillNextGamble += 1 / 60;
+			if (this.timeTillNextGamble >= 1)
+			{
+				this.timeTillNextGamble = 0;
+				if (Math.random() > 0.8)
+				{
+					this.timeSinceLastMove = this.TimeTillNextMove;
+				}
+			}
 		}
 		
 		private function lookForBadGuys():void
