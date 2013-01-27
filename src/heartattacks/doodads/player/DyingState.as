@@ -22,13 +22,15 @@ package heartattacks.doodads.player
 		public function onEnter(spritemap:Spritemap):void 
 		{
 			spritemap.play("dying");
-			TweenLite.to(spritemap, 1, { alpha: 0, delay: 1, onComplete: this.ExitGame } );
 			Music.explosion.play();
+			TweenLite.to(spritemap, 1, { alpha: 0, delay: 1, onComplete: this.ExitGame } );	
+			
 		}
 		
 		private function ExitGame():void 
-		{
+		{   
 			FP.world = new Dead();
+			
 		}
 		
 		public function update(spritemap:Spritemap):void 

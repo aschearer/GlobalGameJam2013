@@ -29,9 +29,12 @@ package heartattacks.states
 			this.gameOver = new GameOverScr(0, 0);
 			this.add(this.gameOver);
 			
-			this.resume = new Resume(300, 600);
+			this.resume = new Resume(300, 400);
 			this.add(this.resume);
-			
+					
+			Music.gameplay.stop();
+			Music.heartbeat.stop();
+			Music.gameover.loop();
 		}
 		
 	}

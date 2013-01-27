@@ -43,6 +43,7 @@ package heartattacks.states
 		
 			
 			Music.lobby.loop();
+			Music.gameover.stop();
 			
 		}
 		

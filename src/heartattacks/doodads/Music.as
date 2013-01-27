@@ -25,7 +25,7 @@ package heartattacks.doodads
 		[Embed(source = "../../../res/Music/game_indicator.mp3")] protected static const INDICATOR:Class;
 		[Embed(source = "../../../res/Music/game_pickup.mp3")] protected static const PICKUP:Class;
 		[Embed(source = "../../../res/Music/menu_click.mp3")] protected static const CLICK:Class;
-		[Embed(source = "../../../res/Music/menu_gameOver.mp3")] protected static const GAMEOVER:Class;
+		[Embed(source = "../../../res/Music/song_gameOver.mp3")] protected static const GAMEOVER:Class;
 		[Embed(source = "../../../res/Music/menu_startGame.mp3")] protected static const START:Class;
 		[Embed(source = "../../../res/Music/music_ending.mp3")] protected static const END:Class;
 		[Embed(source = "../../../res/Music/music_gameplay.mp3")] protected static const GAMEPLAY:Class;

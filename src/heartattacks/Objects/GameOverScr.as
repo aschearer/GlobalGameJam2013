@@ -25,10 +25,7 @@ package heartattacks.Objects
 			super(x, y);
 			this.gameOver = new Image(OverImage);
 			this.graphic = this.gameOver;
-			
-			Music.gameplay.stop();
-			Music.heartbeat.stop();
-			Music.gameover.loop();
+	
 		}
 		
 		
