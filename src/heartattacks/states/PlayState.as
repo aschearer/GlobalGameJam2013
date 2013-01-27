@@ -33,7 +33,7 @@ package heartattacks.states
 		[Embed(source = "../../../res/tilesets/CityTiles.png")]
 		private var MapImage:Class;
 		
-		[Embed(source = "../../../res/tilemaps/TestLevel.oel", mimeType = "application/octet-stream")]
+		[Embed(source = "../../../res/tilemaps/Sievajetsmasterpiece.oel", mimeType = "application/octet-stream")]
 		private var Map:Class;
 		private var level:Level;
 		private var score:Score;
@@ -71,8 +71,21 @@ package heartattacks.states
 				FP.stage.removeChild(this.testGui);
 				this.testGui = new TestingGui(this.level.player, this.level.girl);
 				FP.stage.addChild(this.testGui);
-			}
+			
+			}	
+				
+			if (FP.camera.y >= 6000)
+				{
+					FP.camera.y = 0;
+				}
+				
+				if (this.level.player.distanceTraveled = 1000)
+				{
+					//FP.world = 
+				}
 		}
+		
+	
 
 		private function CanGirlSeePlayer():Boolean
 		{

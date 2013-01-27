@@ -41,8 +41,7 @@ package heartattacks.doodads
 		private var runTime:Number = 0;
 		private var timeTillBonusExpires:Number = 2;
 		private var states:StateMachine;
-		
-		
+	    public var distanceTraveled:Number;
 		
 		
 		public function Player(girl:Girl, heart:HeartMeter) 
@@ -87,6 +86,8 @@ package heartattacks.doodads
 		{
 			return (1 - this.percentageToGirl()) * this.TurningSensitivity;
 		}
+			
+			
 		
 		override public function update():void
 		{
@@ -128,6 +129,7 @@ package heartattacks.doodads
 			}
 			
 			FP.camera.y += cameraSpeed;
+			distanceTraveled += cameraSpeed;
 			if (this.states.state != "scared-state" && this.states.state != "dying-state")
 			{
 				var bonus:Number = this.timeTillBonusExpires > 0 ? this.SpeedBonus : 1;
