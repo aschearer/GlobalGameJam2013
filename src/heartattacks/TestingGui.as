@@ -72,24 +72,6 @@ package heartattacks
 				this.OnSpeedBonus);
 				
 			this.AddSlider(
-				"Trail Width",
-				10,
-				110,
-				10,
-				60,
-				this.girl.TrailWidth,
-				this.OnTrailWidth);
-				
-			this.AddSlider(
-				"Trail Length",
-				10,
-				130,
-				40,
-				440,
-				this.girl.TrailLength,
-				this.OnTrailLength);
-				
-			this.AddSlider(
 				"Time Till Lane Change",
 				10,
 				150,
@@ -154,24 +136,6 @@ package heartattacks
 		{
 			var slider:HUISlider = HUISlider(e.target);
 			this.player.TurningSpeed = 600 - slider.value;
-		}
-		
-		private function OnTrailWidth(e:Event):void
-		{
-			var slider:HUISlider = HUISlider(e.target);
-			this.girl.TrailWidth = slider.value;
-		}
-		
-		private function OnTrailLength(e:Event):void
-		{
-			var slider:HUISlider = HUISlider(e.target);
-			this.girl.TrailLength = slider.value;
-		}
-		
-		private function OnGirlSpeed(e:Event):void
-		{
-			var slider:HUISlider = HUISlider(e.target);
-			this.girl.MovementSpeed = slider.value;
 		}
 		
 		private function OnCameraSpeed(e:Event):void

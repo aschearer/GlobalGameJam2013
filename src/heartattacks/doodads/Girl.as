@@ -15,10 +15,7 @@ package heartattacks.doodads
 	 */
 	public class Girl extends Entity
 	{
-		public var TrailLength:Number = 600;
-		public var TrailWidth:Number;
-		public var MovementSpeed:Number = 0.6;
-		public var TimeTillNextMove:Number = 1
+		public var TimeTillNextMove:Number = 3.2;
 		public var percentageToBoy:Number;
 		
 		[Embed(source = "../../../res/spritesheets/Girl.png")] protected var GirlImage:Class;
@@ -41,15 +38,6 @@ package heartattacks.doodads
 			this.layer = 2;
 			this.timeSinceLastMove  = 0;
 			this.percentageToBoy = 0;
-			
-			this.TrailWidth = this.width;
-		}
-		
-		override public function render():void
-		{
-			super.render();
-			//var center:Number = this.x + (this.width - this.TrailWidth) / 2;
-			//Draw.rect(center, this.y + FP.camera.y, this.TrailWidth, -this.TrailLength, 0xFFFFFF, 0.2);
 		}
 		
 		override public function update():void
