@@ -31,7 +31,10 @@ package heartattacks.states
 			
 			this.resume = new Resume(300, 400);
 			this.add(this.resume);
-					
+		}
+		
+		public override function begin():void
+		{
 			Music.gameplay.stop();
 			Music.heartbeat.stop();
 			Music.gameover.loop();

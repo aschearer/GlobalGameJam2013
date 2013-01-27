@@ -54,12 +54,14 @@ package heartattacks.doodads
 			this.states.addState("angry-state", new AngryState());
 		}
 		
+		/*
 		public override function render():void
 		{
 			super.render();
 			Draw.circle(this.centerX, this.centerY + FP.camera.y, this.SensitiveArea);
 			Draw.circle(this.centerX, this.centerY + FP.camera.y, this.AwarenessArea);
 		}
+		*/
 		
 		public function get isWaiting():Boolean
 		{

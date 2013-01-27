@@ -1,6 +1,7 @@
 package heartattacks.states 
 {
 	import heartattacks.doodads.Music;
+	import heartattacks.Objects.Button;
 	import heartattacks.Objects.CreditsButton;
 	import heartattacks.Objects.FaceBook;
 	import heartattacks.Objects.MenuScreen;
@@ -13,6 +14,7 @@ package heartattacks.states
 	import net.flashpunk.utils.Input
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.utils.Draw
+	import net.flashpunk.FP;
 	import net.flashpunk.Sfx;
 	/**
 	 * ...
@@ -20,6 +22,8 @@ package heartattacks.states
 	 */
 	public class MenuState extends World
 	{
+		[Embed(source = "../../../res/Buttons/title_screen.png")] private var BackgroundImage:Class;
+		[Embed(source = "../../../res/Buttons/howtoplay_button_down.png")] private var HelpButtonImage:Class;
 		
 		private var bButtons:MenuScreen;
 		private var credits:CreditsButton;
@@ -29,11 +33,16 @@ package heartattacks.states
 		
 		public function MenuState() 
 		{
+			this.addGraphic(new Image(BackgroundImage));
 			this.credits = new CreditsButton(300, 380);
 			this.add(this.credits);
 			
 			this.bButtons = new MenuScreen(300, 300);
 			this.add(this.bButtons);
+			
+			var helpButton:Button = new Button(HelpButtonImage, 300, 460);
+			helpButton.Callback = this.OnHelpClicked;
+			this.add(helpButton);
 			
 			this.faceBook = new FaceBook(600, 380);
 			this.add(this.faceBook);
@@ -45,6 +54,11 @@ package heartattacks.states
 			Music.lobby.loop();
 			Music.gameover.stop();
 			
+		}
+		
+		private function OnHelpClicked():void 
+		{
+			FP.world = new HelpState();
 		}
 		
 		

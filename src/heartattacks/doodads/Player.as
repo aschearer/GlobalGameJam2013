@@ -14,12 +14,14 @@ package heartattacks.doodads
 	import net.flashpunk.utils.Draw
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Text;
+	import net.flashpunk.graphics.Graphiclist;
 
 	
 	 
 	public class Player extends Entity
 	{
 		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
+		[Embed(source = "../../../res/sprites/Arrow.png")] private var ArrowImage:Class;
 		
 		public var MovementSpeed:Number = .7;
 		public var TurningSpeed:Number = 100;
@@ -32,6 +34,7 @@ package heartattacks.doodads
 		public var MaxCameraSpeed:Number = 8;
 		public var TurningSensitivity:Number = 60;
 		
+		public var HeartBeatCallback:Function;
 		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;
 		public var heading:Number = Math.PI / 2;
@@ -42,7 +45,7 @@ package heartattacks.doodads
 		private var timeTillBonusExpires:Number = 2;
 		private var states:StateMachine;
 	    public var distanceTraveled:Number;
-		
+		private var arrow:Image;
 		
 		public function Player(girl:Girl, heart:HeartMeter) 
 		{
@@ -58,7 +61,12 @@ package heartattacks.doodads
 			this.spritemap.add("scared", [23, 24, 25, 26, 27, 28, 29, 30], 12, true);
 			this.spritemap.add("dying", [32, 33, 34, 35, 36, 37, 38, 39], 12, false);
 			this.spritemap.play("walk-forward");
-			this.graphic = this.spritemap;
+			this.arrow = new Image(ArrowImage);
+			this.arrow.centerOrigin();
+			this.arrow.x = 60;
+			this.arrow.y = 120;
+			
+			this.graphic = new Graphiclist(this.arrow, this.spritemap);
 			this.setHitbox(128, 128);
 			this.layer = 2;
 			this.name = "player";
@@ -68,7 +76,8 @@ package heartattacks.doodads
 			this.states.addState("scared-state", new ScaredState());
 			this.states.addState("dying-state", new DyingState());
 		}
-		
+	
+		/*
 		override public function render():void 
 		{
 			super.render();
@@ -76,6 +85,7 @@ package heartattacks.doodads
 			var dy:Number = Math.sin(this.heading) * 50 + FP.camera.y + this.centerY;
 			Draw.line(this.centerX + FP.camera.x, this.centerY + FP.camera.y, dx, dy);
 		}
+		*/
 		
 		public function get isDead():Boolean
 		{
@@ -107,6 +117,11 @@ package heartattacks.doodads
 				this.timeTillNextHeartBeat -= this.HeartRate;
 				this.CurrentScore += this.ScorePerBeat;
 				this.heart.beat(0.5);
+				if (this.HeartBeatCallback != null)
+				{
+					this.HeartBeatCallback();
+				}
+				
 				Music.heartbeat.play();
 			}
 			
@@ -158,12 +173,11 @@ package heartattacks.doodads
 			this.heart.x = this.x;
 			this.heart.y = this.y - 40;
 			this.heart.graphic.scrollY = 0;
+			
+			this.arrow.angle = -(this.heading - Math.PI / 2) * 180 / Math.PI;
 		}
 		
-		
-		
-		
-		private function percentageToGirl():Number
+		public function percentageToGirl():Number
 		{
 			var distanceToGirl:Number = Math.pow(this.girl.x - this.x, 2) + Math.pow(this.girl.y - this.y, 2);
 			var totalDistance:Number = FP.height * FP.height;

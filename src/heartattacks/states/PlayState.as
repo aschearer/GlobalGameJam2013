@@ -3,6 +3,7 @@ package heartattacks.states
 {
 	import heartattacks.doodads.Music;
 	import flash.net.SharedObject;
+	import heartattacks.doodads.ScoreBoard;
 	import heartattacks.TestingGui;
 	import net.flashpunk.*;
 	import flash.events.Event;
@@ -45,13 +46,10 @@ package heartattacks.states
 		public override function begin():void
 		{
 			this.createLevel(null, null);
-			this.score = new Score(this.level.player);
-			add(score);
-			this.testGui = new TestingGui(this.level.player, this.level.girl);
-			FP.stage.addChild(this.testGui);
-
+			this.add(new ScoreBoard(this.level.player));
+			//this.testGui = new TestingGui(this.level.player, this.level.girl);
+			//FP.stage.addChild(this.testGui);
 		}
-		
 	
 		Music.gameplay.loop(0.25);
 		
@@ -67,28 +65,26 @@ package heartattacks.states
 				var oldGirl:Girl = this.level.girl;
 				this.removeAll();
 				this.createLevel(oldPlayer, oldGirl);
+				this.add(new ScoreBoard(this.level.player));
 				
-				FP.stage.removeChild(this.testGui);
-				this.testGui = new TestingGui(this.level.player, this.level.girl);
-				FP.stage.addChild(this.testGui);
-			
+				//FP.stage.removeChild(this.testGui);
+				//this.testGui = new TestingGui(this.level.player, this.level.girl);
+				//FP.stage.addChild(this.testGui);
 			}	
 			
 			
 				
 			if (FP.camera.y >= 6000)
-				{
-					FP.camera.y = 0;
-				}
+			{
+				FP.camera.y = 0;
+			}
 				
-			if (this.level.player.distanceTraveled >= 100)
+			if (this.level.player.distanceTraveled >= 10000)
 				{
 					FP.world = new VictoryState(); 
 				}	
 				
 		}
-		
-	
 
 		private function CanGirlSeePlayer():Boolean
 		{
