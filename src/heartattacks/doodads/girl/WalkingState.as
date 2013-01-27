@@ -7,6 +7,7 @@ package heartattacks.doodads.girl
 	import net.flashpunk.FP;
 	import heartattacks.Level;
 	import heartattacks.doodads.Marker;
+	import net.flashpunk.graphics.Spritemap;
 	/**
 	 * ...
 	 * @author The Heart Attacks
@@ -28,8 +29,9 @@ package heartattacks.doodads.girl
 			this.level = level;
 		}
 		
-		public function onEnter():void
+		public function onEnter(spritemap:Spritemap):void
 		{
+			spritemap.play("walk-forward");
 		}
 		
 		public function setCallback(callback:Function):void
@@ -37,12 +39,7 @@ package heartattacks.doodads.girl
 			this.callback = callback;
 		}
 		
-		public function get animationName():String
-		{
-			return "walk-forward";
-		}
-		
-		public function update():void
+		public function update(spritemap:Spritemap):void
 		{
 			this.emitMarker();
 			this.lookForBadGuys();
@@ -63,11 +60,6 @@ package heartattacks.doodads.girl
 				{
 					this.callback("nervous-state");
 				}
-			}
-			
-			if (Math.random() > .99)
-			{
-				this.callback("startled-state");
 			}
 		}
 		

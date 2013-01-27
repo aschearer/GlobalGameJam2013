@@ -72,7 +72,5 @@ package heartattacks.doodads
 		{
 			this.states.update();
 		}
-		
-		
 	}
 }

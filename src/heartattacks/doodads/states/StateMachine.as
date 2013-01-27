@@ -12,17 +12,20 @@ package heartattacks.doodads.states
 		private var states:Dictionary;
 		private var currentState:String;
 		private var spritemap:Spritemap;
+		private var count:int;
 		
 		public function StateMachine(spritemap:Spritemap) 
 		{
 			this.spritemap = spritemap;
 			this.states = new Dictionary();
+			this.count = 0;
 		}
 		
 		public function addState(name:String, state:IState):void
 		{
 			this.states[name] = state;
-			if (this.states.count == 1)
+			this.count++;
+			if (this.count == 1)
 			{
 				this.currentState = name;
 				this.enterState();
@@ -36,13 +39,12 @@ package heartattacks.doodads.states
 		
 		public function update():void
 		{
-			this.states[this.currentState].update();
+			this.states[this.currentState].update(this.spritemap);
 		}
 		
 		private function enterState():void
 		{
-			this.states[this.currentState].onEnter();
-			this.spritemap.play(this.states[this.currentState].animationName);
+			this.states[this.currentState].onEnter(this.spritemap);
 			this.states[this.currentState].setCallback(this.onStateFinished);
 		}
 		

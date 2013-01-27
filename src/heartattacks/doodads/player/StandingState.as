@@ -1,15 +1,14 @@
-package heartattacks.doodads.girl 
+package heartattacks.doodads.player 
 {
 	import heartattacks.doodads.states.IState;
 	import net.flashpunk.graphics.Spritemap;
-	
+	import net.flashpunk.utils.Input;
 	/**
 	 * ...
 	 * @author The Heart Attacks
 	 */
-	public class AngryState implements IState
+	public class StandingState implements IState
 	{
-		private var timeToLetDownGaurd:Number = 0;
 		private var callback:Function;
 		
 		public function setCallback(callback:Function):void
@@ -19,19 +18,30 @@ package heartattacks.doodads.girl
 		
 		public function onEnter(spritemap:Spritemap):void 
 		{
-			this.timeToLetDownGaurd = .5;
-			spritemap.play("notice-backward");
+			var r:Number = Math.random();
+			if (r < .66)
+			{
+				spritemap.play("stand-forward");
+			}
+			else if (r <= 83)
+			{
+				spritemap.play("stand-side");
+				spritemap.flipped = true;
+			}
+			else
+			{
+				spritemap.play("stand-side");
+				spritemap.flipped = false;
+			}
 		}
 		
 		public function update(spritemap:Spritemap):void 
 		{
-			this.timeToLetDownGaurd -= 1 / 60;
-			if (this.timeToLetDownGaurd <= 0)
+			if (!Input.mouseDown)
 			{
 				this.callback("walking-state");
 			}
 		}
-		
 	}
 
 }

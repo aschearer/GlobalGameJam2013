@@ -1,5 +1,6 @@
 package heartattacks.doodads.states 
 {
+	import net.flashpunk.graphics.Spritemap;
 	
 	/**
 	 * ...
@@ -8,9 +9,8 @@ package heartattacks.doodads.states
 	public interface IState 
 	{
 		function setCallback(callback:Function):void;
-		function get animationName():String;
-		function onEnter():void;
-		function update():void;
+		function onEnter(spritemap:Spritemap):void;
+		function update(spritemap:Spritemap):void;
 	}
 	
 }

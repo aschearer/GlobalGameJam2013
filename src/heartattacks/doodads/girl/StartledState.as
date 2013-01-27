@@ -4,6 +4,7 @@ package heartattacks.doodads.girl
 	import net.flashpunk.FP;
 	import heartattacks.doodads.Player;
 	import heartattacks.doodads.Girl;
+	import net.flashpunk.graphics.Spritemap;
 	
 	/**
 	 * ...
@@ -21,22 +22,18 @@ package heartattacks.doodads.girl
 			this.girl = girl;
 		}
 		
-		public function get animationName():String 
-		{
-			return "startled-backward";
-		}
-		
 		public function setCallback(callback:Function):void
 		{
 			this.callback = callback;}
 		
-		public function onEnter():void 
+		public function onEnter(spritemap:Spritemap):void 
 		{
 			this.timeToLetDownGaurd = .25;
 			this.strikeTimer = .20;
+			spritemap.play("startled-backward");
 		}
 		
-		public function update():void 
+		public function update(spritemap:Spritemap):void 
 		{
 			this.lookForBadGuys();
 			
@@ -51,7 +48,7 @@ package heartattacks.doodads.girl
 		{
 			var player:Player = Player(FP.world.getInstance("player"));
 			var distance:Number = Math.sqrt(Math.pow(player.x - this.girl.x, 2) + Math.pow(player.y - this.girl.y, 2));
-			if (distance < 200 && !player.isWaiting)
+			if (distance < 200)
 			{
 				this.strikeTimer -= 1 / 60;
 				if (this.strikeTimer <= 0)

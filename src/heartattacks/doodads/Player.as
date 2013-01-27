@@ -1,6 +1,10 @@
 package heartattacks.doodads 
 {
 	import flash.geom.Rectangle;
+	import heartattacks.doodads.player.MovingState;
+	import heartattacks.doodads.player.ScaredState;
+	import heartattacks.doodads.player.StandingState;
+	import heartattacks.doodads.states.StateMachine;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
@@ -26,13 +30,13 @@ package heartattacks.doodads
 		
 		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;
-		private var heading:Number = Math.PI / 2;
+		public var heading:Number = Math.PI / 2;
 		private var radius:Number = 100;
 		private var girl:Girl;
 		private var heart:HeartMeter;
 		private var runTime:Number = 0;
-		public var isWaiting:Boolean;
 		private var timeTillBonusExpires:Number = 2;
+		private var states:StateMachine;
 		
 		public function Player(girl:Girl, heart:HeartMeter) 
 		{
@@ -48,14 +52,18 @@ package heartattacks.doodads
 			this.spritemap.add("scared", [23, 24, 25, 26, 27, 28, 29, 30], 12, true);
 			this.spritemap.add("death", [32, 33, 34, 35, 36, 37, 38, 39], 12, false);
 			this.graphic = this.spritemap;
-			this.spritemap.play("walk-forward");
 			this.setHitbox(128, 128);
 			this.layer = 2;
 			this.name = "player";
+			this.states = new StateMachine(this.spritemap);
+			this.states.addState("walking-state", new MovingState(this, girl));
+			this.states.addState("standing-state", new StandingState());
+			this.states.addState("scared-state", new ScaredState());
 		}
 		
 		override public function update():void
 		{
+			this.states.update();
 			if (this.timeTillBonusExpires > 0)
 			{
 				this.timeTillBonusExpires -= 1 / 60;
@@ -64,19 +72,6 @@ package heartattacks.doodads
 			this.testForMarkers();
 			this.girl.percentageToBoy = this.percentageToGirl();
 			var adjustedTime:Number = 1 / 60 + 2 / 60 * this.percentageToGirl();
-			if (this.girl.isWaiting)
-			{
-				if (this.isWaiting)
-				{
-					this.spritemap.play("scared");
-					adjustedTime += 2 / 60;
-				}
-				else if (this.girl.isWatching)
-				{
-					this.spritemap.play("death");
-					this.isWaiting = true;
-				}
-			}
 			
 			this.timeTillNextHeartBeat += adjustedTime;
 			if (this.timeTillNextHeartBeat >= this.HeartRate)
@@ -86,8 +81,6 @@ package heartattacks.doodads
 				this.heart.beat(0.5);
 				Music.heartbeat.play();
 			}
-			
-			this.processMouseControls();
 			
 			this.runTime += 1 / 60;
 			var currentSpeed:Number = this.MovementSpeed;
@@ -108,7 +101,7 @@ package heartattacks.doodads
 			}
 			
 			FP.camera.y += cameraSpeed;
-			if (!this.isWaiting)
+			if (this.states.state != "scared-state")
 			{
 				this.moveBy(8 * Math.cos(this.heading) * playerSpeed, sign * Math.sin(this.heading) * playerSpeed, "level");
 			}
@@ -147,66 +140,6 @@ package heartattacks.doodads
 			{
 				FP.world.remove(marker);
 				this.timeTillBonusExpires = 2;
-			}
-		}
-		
-		private function processMouseControls():void
-		{
-			if (Input.mouseDown)
-			{
-				if (this.isWaiting || this.collidePoint(this.x, this.y, Input.mouseX, Input.mouseY))
-				{
-					if (this.spritemap.currentAnim != "stand-forward" &&
-						this.spritemap.currentAnim != "stand-side")
-					{
-						if (Math.random() > 0.33)
-						{
-							this.spritemap.play("stand-forward");
-						}
-						else
-						{
-							if (Math.random() > 0.5)
-							{
-								this.spritemap.flipped = true;
-							}
-							
-							this.spritemap.play("stand-side");
-						}
-						this.isWaiting = true;
-					}
-				}
-				else
-				{
-					this.isWaiting = false;
-					var dx:Number = Input.mouseX - this.centerX;
-					var dy:Number = Input.mouseY - this.centerY;
-					var theta:Number = Math.atan2(dy, dx);
-					this.heading = theta;
-					if (this.heading < Math.PI / 2 - Math.PI / 8)
-					{
-						this.spritemap.flipped = false;
-						this.spritemap.play("walk-side");
-					}
-					else if (this.heading > Math.PI / 2 + Math.PI / 8)
-					{
-						this.spritemap.flipped = true;
-						this.spritemap.play("walk-side");
-					}
-					else if (this.spritemap.currentAnim != "walk-forward")
-					{
-						this.spritemap.flipped = false;
-						this.spritemap.play("walk-forward");
-					}
-				}
-			}
-			else
-			{
-				this.isWaiting = false;
-				this.heading = Math.PI / 2;
-				if (this.spritemap.currentAnim != "walk-forward")
-				{
-					this.spritemap.play("walk-forward");
-				}
 			}
 		}
 	}
