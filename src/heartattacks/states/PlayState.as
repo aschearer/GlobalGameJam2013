@@ -47,8 +47,8 @@ package heartattacks.states
 		{
 			this.createLevel(null, null);
 			this.add(new ScoreBoard(this.level.player));
-			//this.testGui = new TestingGui(this.level.player, this.level.girl);
-			//FP.stage.addChild(this.testGui);
+			this.testGui = new TestingGui(this.level.player, this.level.girl);
+			FP.stage.addChild(this.testGui);
 		}
 	
 		Music.gameplay.loop(0.25);
@@ -67,9 +67,9 @@ package heartattacks.states
 				this.createLevel(oldPlayer, oldGirl);
 				this.add(new ScoreBoard(this.level.player));
 				
-				//FP.stage.removeChild(this.testGui);
-				//this.testGui = new TestingGui(this.level.player, this.level.girl);
-				//FP.stage.addChild(this.testGui);
+				FP.stage.removeChild(this.testGui);
+				this.testGui = new TestingGui(this.level.player, this.level.girl);
+				FP.stage.addChild(this.testGui);
 			}	
 				
 			if (FP.camera.y >= 6000)

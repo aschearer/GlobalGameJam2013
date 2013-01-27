@@ -23,8 +23,8 @@ package heartattacks
 		public var heart:HeartMeter;
 		public var numColumns:int;
 		public var numRows:int;
-		public var gutterLeft:int = 4;
-		public var gutterRight:int = 2;
+		public var gutterLeft:int = 0;
+		public var gutterRight:int = 0;
 		
 		public function Level(tileset:Class, levelData:Class)
 		{
@@ -78,7 +78,7 @@ package heartattacks
 				this.grid.setTile(
 					column,
 					row,
-					index < 7);
+					false);
 			}
 		}
 	}
