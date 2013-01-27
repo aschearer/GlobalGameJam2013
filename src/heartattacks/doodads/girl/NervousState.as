@@ -1,5 +1,6 @@
-package heartattacks.doodads.states 
+package heartattacks.doodads.girl 
 {
+	import heartattacks.doodads.states.IState;
 	import net.flashpunk.FP;
 	import heartattacks.doodads.Player;
 	import heartattacks.doodads.Girl;
@@ -8,31 +9,32 @@ package heartattacks.doodads.states
 	 * ...
 	 * @author The Heart Attacks
 	 */
-	public class StartledState implements IGirlState
+	public class NervousState implements IState
 	{
 		private var timeToLetDownGaurd:Number = 0;
+		private var strikeTimer:Number = 0;
 		private var callback:Function;
 		private var girl:Girl;
-		private var strikeTimer:Number = 0;
 		
-		public function StartledState(girl:Girl)
+		public function NervousState(girl:Girl)
 		{
 			this.girl = girl;
 		}
 		
 		public function get animationName():String 
 		{
-			return "startled-backward";
+			return "notice-forward";
 		}
 		
 		public function setCallback(callback:Function):void
 		{
-			this.callback = callback;}
+			this.callback = callback;
+		}
 		
 		public function onEnter():void 
 		{
-			this.timeToLetDownGaurd = .25;
-			this.strikeTimer = .20;
+			this.timeToLetDownGaurd = .5;
+			this.strikeTimer = .35;
 		}
 		
 		public function update():void 
@@ -55,11 +57,10 @@ package heartattacks.doodads.states
 				this.strikeTimer -= 1 / 60;
 				if (this.strikeTimer <= 0)
 				{
-					this.callback("angry-state");
+					this.callback("startled-state");
 				}
 			}
 		}
-		
 	}
 
 }

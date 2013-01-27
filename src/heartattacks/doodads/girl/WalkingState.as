@@ -1,5 +1,6 @@
-package heartattacks.doodads.states 
+package heartattacks.doodads.girl 
 {
+	import heartattacks.doodads.states.IState;
 	import heartattacks.doodads.Girl;
 	import com.greensock.TweenLite;
 	import heartattacks.doodads.Player;
@@ -10,7 +11,7 @@ package heartattacks.doodads.states
 	 * ...
 	 * @author The Heart Attacks
 	 */
-	public class WalkingState implements IGirlState
+	public class WalkingState implements IState
 	{
 		public var TimeTillNextMove:Number = 3.2;
 		

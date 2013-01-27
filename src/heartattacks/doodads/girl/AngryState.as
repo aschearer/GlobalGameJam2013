@@ -1,10 +1,12 @@
-package heartattacks.doodads.states 
+package heartattacks.doodads.girl 
 {
+	import heartattacks.doodads.states.IState;
+	
 	/**
 	 * ...
 	 * @author The Heart Attacks
 	 */
-	public class AngryState implements IGirlState
+	public class AngryState implements IState
 	{
 		private var timeToLetDownGaurd:Number = 0;
 		private var callback:Function;

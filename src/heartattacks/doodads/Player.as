@@ -45,6 +45,8 @@ package heartattacks.doodads
 			this.spritemap.add("walk-side", [18, 19, 20, 21], 12, true);
 			this.spritemap.add("stand-forward", [7, 8, 9, 10, 11], 12, true);
 			this.spritemap.add("stand-side", [1, 2, 3, 4, 5], 12, true);
+			this.spritemap.add("scared", [23, 24, 25, 26, 27, 28, 29, 30], 12, true);
+			this.spritemap.add("death", [32, 33, 34, 35, 36, 37, 38, 39], 12, false);
 			this.graphic = this.spritemap;
 			this.spritemap.play("walk-forward");
 			this.setHitbox(128, 128);
@@ -61,7 +63,21 @@ package heartattacks.doodads
 			
 			this.testForMarkers();
 			this.girl.percentageToBoy = this.percentageToGirl();
-			var adjustedTime:Number = 1 / 60 + 1 / 60 * this.percentageToGirl();
+			var adjustedTime:Number = 1 / 60 + 2 / 60 * this.percentageToGirl();
+			if (this.girl.isWaiting)
+			{
+				if (this.isWaiting)
+				{
+					this.spritemap.play("scared");
+					adjustedTime += 2 / 60;
+				}
+				else if (this.girl.isWatching)
+				{
+					this.spritemap.play("death");
+					this.isWaiting = true;
+				}
+			}
+			
 			this.timeTillNextHeartBeat += adjustedTime;
 			if (this.timeTillNextHeartBeat >= this.HeartRate)
 			{
@@ -72,7 +88,6 @@ package heartattacks.doodads
 			}
 			
 			this.processMouseControls();
-			//this.processArrowControls();
 			
 			this.runTime += 1 / 60;
 			var currentSpeed:Number = this.MovementSpeed;

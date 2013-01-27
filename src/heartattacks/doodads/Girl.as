@@ -2,10 +2,11 @@ package heartattacks.doodads
 {
 	import com.greensock.TweenLite;
 	import flash.utils.Dictionary;
-	import heartattacks.doodads.states.NervousState;
-	import heartattacks.doodads.states.StartledState;
-	import heartattacks.doodads.states.WalkingState;
-	import heartattacks.doodads.states.AngryState;
+	import heartattacks.doodads.girl.NervousState;
+	import heartattacks.doodads.girl.StartledState;
+	import heartattacks.doodads.girl.WalkingState;
+	import heartattacks.doodads.girl.AngryState;
+	import heartattacks.doodads.states.StateMachine;
 	import heartattacks.Level;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Image;
@@ -27,8 +28,7 @@ package heartattacks.doodads
 		
 		private var timeToLetDownGaurd:Number = 0;
 		private var level:Level;
-		private var states:Dictionary;
-		private var currentState:String;
+		private var states:StateMachine;
 		
 		public function Girl(level:Level) 
 		{
@@ -44,13 +44,11 @@ package heartattacks.doodads
 			this.setHitbox(64, 128);
 			this.layer = 2;
 			this.percentageToBoy = 0;
-			this.states = new Dictionary();
-			this.states["walking-state"] = new WalkingState(this, level);
-			this.states["nervous-state"] = new NervousState(this);
-			this.states["startled-state"] = new StartledState(this);
-			this.states["angry-state"] = new AngryState();
-			this.currentState = "walking-state";
-			this.enterState();
+			this.states = new StateMachine(this.spritemap);
+			this.states.addState("walking-state", new WalkingState(this, level));
+			this.states.addState("nervous-state", new NervousState(this));
+			this.states.addState("startled-state", new StartledState(this));
+			this.states.addState("angry-state", new AngryState());
 		}
 		
 		public override function render():void
@@ -61,26 +59,20 @@ package heartattacks.doodads
 		
 		public function get isWaiting():Boolean
 		{
-			return this.currentState == "angry-state" ||
-					this.currentState == "startled-state";
+			return this.states.state == "angry-state" ||
+					this.states.state == "startled-state";
+		}
+		
+		public function get isWatching():Boolean
+		{
+			return this.states.state == "angry-state";
 		}
 		
 		override public function update():void
 		{
-			this.states[this.currentState].update();
+			this.states.update();
 		}
 		
-		private function enterState():void
-		{
-			this.states[this.currentState].onEnter();
-			this.spritemap.play(this.states[this.currentState].animationName);
-			this.states[this.currentState].setCallback(this.onStateFinished);
-		}
 		
-		private function onStateFinished(nextState:String):void
-		{
-			this.currentState = nextState;
-			this.enterState();
-		}
 	}
 }
