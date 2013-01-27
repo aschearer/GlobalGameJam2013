@@ -22,6 +22,7 @@ package heartattacks.states
 	 */
 	public class MenuState extends World
 	{
+		[Embed(source = "../../../res/Buttons/title_screen.png")] private var BackgroundImage:Class;
 		[Embed(source = "../../../res/Buttons/howtoplay_button_down.png")] private var HelpButtonImage:Class;
 		
 		private var bButtons:MenuScreen;
@@ -32,6 +33,7 @@ package heartattacks.states
 		
 		public function MenuState() 
 		{
+			this.addGraphic(new Image(BackgroundImage));
 			this.credits = new CreditsButton(300, 380);
 			this.add(this.credits);
 			

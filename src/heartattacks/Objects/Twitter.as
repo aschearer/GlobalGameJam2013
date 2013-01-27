@@ -45,7 +45,7 @@ package heartattacks.Objects
 				if (Input.mousePressed)
 				{
 					this.tUpImage= this.tDownImage;
-				    openURL("http://www.twitter.com","");
+				    openURL("http://www.twitter.com/theheartattacks","");
 				}
 				
 			}
