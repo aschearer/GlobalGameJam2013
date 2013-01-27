@@ -1,5 +1,6 @@
 package heartattacks.Objects 
 {
+	import heartattacks.doodads.Music;
     import heartattacks.Objects.CreditsButton;
 	import heartattacks.Objects.MenuScreen;
 	import heartattacks.states.MenuState;
@@ -47,6 +48,7 @@ package heartattacks.Objects
 			{
 				if (Input.mousePressed)
 				{
+					Music.gameover.stop();
 					this.reUpImage = this.reDownImage;
 					FP.world = new MenuState();
 				}
