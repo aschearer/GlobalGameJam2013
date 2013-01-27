@@ -63,6 +63,11 @@ package heartattacks.doodads.states
 					this.callback("nervous-state");
 				}
 			}
+			
+			if (Math.random() > .99)
+			{
+				this.callback("startled-state");
+			}
 		}
 		
 		private function changeColumns():void

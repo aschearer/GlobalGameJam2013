@@ -44,6 +44,7 @@ package heartattacks.doodads
 			this.spritemap.add("walk-forward", [13, 14, 15, 16], 12, true);
 			this.spritemap.add("walk-side", [18, 19, 20, 21], 12, true);
 			this.spritemap.add("stand-forward", [7, 8, 9, 10, 11], 12, true);
+			this.spritemap.add("stand-side", [1, 2, 3, 4, 5], 12, true);
 			this.graphic = this.spritemap;
 			this.spritemap.play("walk-forward");
 			this.setHitbox(128, 128);
@@ -140,11 +141,23 @@ package heartattacks.doodads
 			{
 				if (this.isWaiting || this.collidePoint(this.x, this.y, Input.mouseX, Input.mouseY))
 				{
-					if (this.spritemap.currentAnim != "stand-forward")
+					if (this.spritemap.currentAnim != "stand-forward" &&
+						this.spritemap.currentAnim != "stand-side")
 					{
-						this.spritemap.play("stand-forward");
+						if (Math.random() > 0.33)
+						{
+							this.spritemap.play("stand-forward");
+						}
+						else
+						{
+							if (Math.random() > 0.5)
+							{
+								this.spritemap.flipped = true;
+							}
+							
+							this.spritemap.play("stand-side");
+						}
 						this.isWaiting = true;
-						trace("stand-forward");
 					}
 				}
 				else
@@ -168,7 +181,6 @@ package heartattacks.doodads
 					{
 						this.spritemap.flipped = false;
 						this.spritemap.play("walk-forward");
-						trace("walk-forward");
 					}
 				}
 			}
@@ -179,7 +191,6 @@ package heartattacks.doodads
 				if (this.spritemap.currentAnim != "walk-forward")
 				{
 					this.spritemap.play("walk-forward");
-					trace("walk-forward");
 				}
 			}
 		}
