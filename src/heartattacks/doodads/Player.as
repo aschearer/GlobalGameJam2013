@@ -126,7 +126,11 @@ package heartattacks.doodads
 			FP.camera.y += cameraSpeed;
 			if (this.states.state != "scared-state" && this.states.state != "dying-state")
 			{
-				this.moveBy(this.HorizontalBoost * Math.cos(this.heading) * playerSpeed, sign * Math.sin(this.heading) * playerSpeed, "level");
+				var bonus:Number = this.timeTillBonusExpires > 0 ? this.SpeedBonus : 1;
+				this.moveBy(
+					this.HorizontalBoost * Math.cos(this.heading) * playerSpeed * bonus,
+					sign * Math.sin(this.heading) * playerSpeed * bonus, 
+					"level");
 			}
 			else
 			{

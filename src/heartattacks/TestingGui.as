@@ -63,6 +63,15 @@ package heartattacks
 				this.OnScorePerBeat);
 				
 			this.AddSlider(
+				"Turning Sensitivity",
+				10,
+				90,
+				10,
+				100,
+				this.player.TurningSensitivity,
+				this.OnTurnSensitivity);
+				
+			this.AddSlider(
 				"Speed Bonus",
 				10,
 				90,
@@ -97,6 +106,12 @@ package heartattacks
 				10,
 				this.player.MaxCameraSpeed,
 				this.OnMaxCameraSpeed);
+		}
+		
+		private function OnTurnSensitivity():void 
+		{
+			var slider:HUISlider = HUISlider(e.target);
+			this.player.TurningSensitivity = slider.value;
 		}
 		
 		private function AddSlider(label:String, x:int, y:int, min:Number, max:Number, current:Number, handler:Function):void
