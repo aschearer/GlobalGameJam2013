@@ -21,14 +21,15 @@ package heartattacks.doodads
 		[Embed(source = "../../../res/spritesheets/Monster.png")] private var PlayerImage:Class;
 		
 		public var MovementSpeed:Number = .7;
-		public var TurningSpeed:Number = 30;
-		public var SpeedBonus:Number = 4;
+		public var TurningSpeed:Number = 100;
+		public var SpeedBonus:Number = 3.4;
 		public var HorizontalBoost:Number = 8;
 		public var CurrentScore:uint = 0;
 		public var HeartRate:Number = 1;
 		public var ScorePerBeat:int = 100;
-		public var MinCameraSpeed:Number = 1;
-		public var MaxCameraSpeed:Number = 3;
+		public var MinCameraSpeed:Number = 3;
+		public var MaxCameraSpeed:Number = 8;
+		public var TurningSensitivity:Number = 60;
 		
 		private var timeTillNextHeartBeat:Number = 0;
 		private var spritemap:Spritemap;
@@ -53,6 +54,7 @@ package heartattacks.doodads
 			this.spritemap.add("stand-side", [1, 2, 3, 4, 5], 12, true);
 			this.spritemap.add("scared", [23, 24, 25, 26, 27, 28, 29, 30], 12, true);
 			this.spritemap.add("dying", [32, 33, 34, 35, 36, 37, 38, 39], 12, false);
+			this.spritemap.play("walk-forward");
 			this.graphic = this.spritemap;
 			this.setHitbox(128, 128);
 			this.layer = 2;
@@ -64,9 +66,22 @@ package heartattacks.doodads
 			this.states.addState("dying-state", new DyingState());
 		}
 		
+		override public function render():void 
+		{
+			super.render();
+			var dx:Number = Math.cos(this.heading) * 50 + FP.camera.x + this.centerX;
+			var dy:Number = Math.sin(this.heading) * 50 + FP.camera.y + this.centerY;
+			Draw.line(this.centerX + FP.camera.x, this.centerY + FP.camera.y, dx, dy);
+		}
+		
 		public function get isDead():Boolean
 		{
 			return this.states.state == "dying-state";
+		}
+		
+		public function get CurrentTurningSensitivity():Number
+		{
+			return (1 - this.percentageToGirl()) * this.TurningSensitivity;
 		}
 		
 		override public function update():void

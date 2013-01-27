@@ -18,13 +18,20 @@ package heartattacks.doodads
 		
 		public function Marker(x:int, y:int) 
 		{
-			super(x - 8, y + FP.camera.y - 8);
-			this.setHitbox(16, 16);
+			super(x - 12 + this.random(-4, 4), y + FP.camera.y - 12 + this.random(-4, 4));
+			this.setHitbox(24, 24);
 			this.layer = 2;
 			this.type = "marker";
 			var image:Image = new Image(MarkerImage);
-			image.alpha = 0.5;
+			image.angle = this.random(0, 2 * Math.PI);
+			//image.alpha = this.random(0.1, 1);
 			this.graphic = image;
+		}
+		
+		private function random(min:int, max:int):int
+		{
+			var delta:int = max - min;
+			return Math.random() * delta + min;
 		}
 		
 		public override function update():void
