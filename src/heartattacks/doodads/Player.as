@@ -44,7 +44,7 @@ package heartattacks.doodads
 		private var runTime:Number = 0;
 		private var timeTillBonusExpires:Number = 1.1;
 		private var states:StateMachine;
-	    public var distanceTraveled:Number;
+	    public var distanceTraveled:Number = 0;
 		private var arrow:Image;
 		
 		public var yVelocity:Number = 0;
@@ -145,7 +145,7 @@ package heartattacks.doodads
 			}
 			
 			FP.camera.y += cameraSpeed;
-			distanceTraveled = FP.camera.y;
+			distanceTraveled += cameraSpeed;
 			
 			this.graphic.scrollY = 0;
 			this.girl.graphic.scrollY = 0;

@@ -42,15 +42,10 @@ package heartattacks.Objects
 		{
 			super.update();
 			
-			if ( this.collidePoint(this.x, this.y, Input.mouseX, Input.mouseY))
+			if (spritemap.frame == 7 && Input.mousePressed)
 			{
-				if (Input.mousePressed)
-				{
-				
-					FP.world = new MenuState();
-				}
 			
-			
+				FP.world = new MenuState();
 			}
 	
     	}
