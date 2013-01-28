@@ -55,12 +55,18 @@ package heartattacks.doodads.player
 			else if (this.player.heading > Math.PI / 2 + Math.PI / 8)
 			{
 				spritemap.flipped = true;
-				spritemap.play("walk-side");
+				if (this.player.IsHappy)
+					spritemap.play("walk-side-happy");
+				else
+					spritemap.play("walk-side");
 			}
-			else if (spritemap.currentAnim != "walk-forward")
+			else if (spritemap.currentAnim != "walk-forward" && spritemap.currentAnim != "walk-forward-happy")
 			{
 				spritemap.flipped = false;
-				spritemap.play("walk-forward");
+				if (this.player.IsHappy)
+					spritemap.play("walk-side-happy");
+				else
+					spritemap.play("walk-side");
 			}
 		}
 		

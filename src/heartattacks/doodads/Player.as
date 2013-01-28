@@ -56,6 +56,8 @@ package heartattacks.doodads
 			this.spritemap = new Spritemap(PlayerImage, 128, 128);
 			this.spritemap.add("walk-forward", [13, 14, 15, 16], 12, true);
 			this.spritemap.add("walk-side", [18, 19, 20, 21], 12, true);
+			this.spritemap.add("walk-forward-happy", [51,52,53,54], 12, true);
+			this.spritemap.add("walk-side-happy", [56,57,58,59], 12, true);
 			this.spritemap.add("stand-forward", [7, 8, 9, 10, 11], 12, true);
 			this.spritemap.add("stand-side", [1, 2, 3, 4, 5], 12, true);
 			this.spritemap.add("scared", [23, 24, 25, 26, 27, 28, 29, 30], 12, true);
@@ -77,6 +79,10 @@ package heartattacks.doodads
 			this.states.addState("dying-state", new DyingState());
 		}
 	
+		public function get IsHappy():Boolean
+		{
+			return this.timeTillBonusExpires > 0;
+		}
 		/*
 		override public function render():void 
 		{
@@ -175,6 +181,29 @@ package heartattacks.doodads
 			this.heart.graphic.scrollY = 0;
 			
 			this.arrow.angle = -(this.heading - Math.PI / 2) * 180 / Math.PI;
+			
+			if (this.timeTillBonusExpires > 0)
+			{
+				if (this.spritemap.currentAnim == "walk-forward")
+				{
+					this.spritemap.play("walk-forward-happy");
+				}
+				else if (this.spritemap.currentAnim == "walking-side")
+				{
+					this.spritemap.play("walk-side-happy");
+				}
+			}
+			else
+			{
+				if (this.spritemap.currentAnim == "walk-forward-happy")
+				{
+					this.spritemap.play("walk-forward");
+				}
+				else if (this.spritemap.currentAnim == "walking-side-happy")
+				{
+					this.spritemap.play("walk-side");
+				}
+			}
 		}
 		
 		public function percentageToGirl():Number
