@@ -42,10 +42,13 @@ package heartattacks.doodads
 		private var girl:Girl;
 		private var heart:HeartMeter;
 		private var runTime:Number = 0;
-		private var timeTillBonusExpires:Number = 2;
+		private var timeTillBonusExpires:Number = 1;
 		private var states:StateMachine;
 	    public var distanceTraveled:Number;
 		private var arrow:Image;
+		
+		public var yVelocity:Number = 0;
+		public var xVelocity:Number = 0;
 		
 		public function Player(girl:Girl, heart:HeartMeter) 
 		{
@@ -133,15 +136,7 @@ package heartattacks.doodads
 			
 			this.runTime += 1 / 60;
 			var currentSpeed:Number = this.MovementSpeed;
-			var sign:Number = this.timeTillBonusExpires > 0 ? 1 : -1;
 			
-			var playerDistanceFromCenter:Number = FP.halfHeight - this.centerY;
-			var playerSpeed:Number = playerDistanceFromCenter / FP.halfHeight * currentSpeed;
-			var girlDistanceFromCenter:Number = FP.halfHeight - this.girl.centerY;
-			var girlSpeed:Number = girlDistanceFromCenter / FP.halfHeight * currentSpeed;
-			var distanceToGirl:Number = Math.pow(this.girl.x - this.x, 2) + Math.pow(this.girl.y - this.y, 2);
-			var totalDistance:Number = FP.height * FP.height;
-			var percentToGirl:Number = Math.min(1, Math.max(0, (totalDistance - distanceToGirl) / totalDistance));
 			var deltaSpeed:Number = this.MaxCameraSpeed - this.MinCameraSpeed;
 			var cameraSpeed:Number = currentSpeed * ((deltaSpeed * this.percentageToGirl()) + this.MinCameraSpeed);
 			if (this.girl.isWaiting)
@@ -151,28 +146,6 @@ package heartattacks.doodads
 			
 			FP.camera.y += cameraSpeed;
 			distanceTraveled = FP.camera.y;
-
-			if (this.states.state != "scared-state" && this.states.state != "dying-state")
-			{
-				var bonus:Number = this.timeTillBonusExpires > 0 ? this.SpeedBonus : 1;
-				this.moveBy(
-					this.HorizontalBoost * Math.cos(this.heading) * playerSpeed * bonus,
-					sign * Math.sin(this.heading) * playerSpeed * bonus, 
-					"level");
-			}
-			else
-			{
-				this.moveBy(0, -cameraSpeed, "level");
-			}
-			
-			if (!this.girl.isWaiting)
-			{
-				this.girl.moveBy(0, sign * girlSpeed, "level");
-			}
-			else
-			{
-				this.girl.moveBy(0, -cameraSpeed, "level");
-			}
 			
 			this.graphic.scrollY = 0;
 			this.girl.graphic.scrollY = 0;
@@ -182,27 +155,11 @@ package heartattacks.doodads
 			
 			this.arrow.angle = -(this.heading - Math.PI / 2) * 180 / Math.PI;
 			
-			if (this.timeTillBonusExpires > 0)
+			this.moveBy(this.xVelocity, this.yVelocity);
+			
+			if (!this.girl.isWaiting)
 			{
-				if (this.spritemap.currentAnim == "walk-forward")
-				{
-					this.spritemap.play("walk-forward-happy");
-				}
-				else if (this.spritemap.currentAnim == "walking-side")
-				{
-					this.spritemap.play("walk-side-happy");
-				}
-			}
-			else
-			{
-				if (this.spritemap.currentAnim == "walk-forward-happy")
-				{
-					this.spritemap.play("walk-forward");
-				}
-				else if (this.spritemap.currentAnim == "walking-side-happy")
-				{
-					this.spritemap.play("walk-side");
-				}
+				this.girl.moveBy(0, -this.yVelocity);
 			}
 		}
 		
@@ -219,7 +176,7 @@ package heartattacks.doodads
 			if (marker != null)
 			{
 				FP.world.remove(marker);
-				this.timeTillBonusExpires = 2;
+				this.timeTillBonusExpires = 0.5;
 			}
 		}
 	}

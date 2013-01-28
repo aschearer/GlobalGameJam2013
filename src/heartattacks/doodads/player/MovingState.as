@@ -1,9 +1,11 @@
 package heartattacks.doodads.player 
 {
 	import com.greensock.TweenLite;
+	
 	import heartattacks.doodads.Girl;
 	import heartattacks.doodads.Player;
 	import heartattacks.doodads.states.IState;
+	
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input;
 	/**
@@ -15,7 +17,6 @@ package heartattacks.doodads.player
 		private var callback:Function;
 		private var player:Player;
 		private var girl:Girl;
-		private var targetHeading:Number;
 		
 		public function MovingState(player:Player, girl:Girl)
 		{
@@ -35,47 +36,62 @@ package heartattacks.doodads.player
 		public function update(spritemap:Spritemap):void 
 		{
 			this.processInput(spritemap);
+			if (this.player.IsHappy)
+			{
+				this.player.yVelocity = 0.5;
+			}
+			else
+			{
+				this.player.yVelocity = -1.5;
+			}
+			
+			
 			if (this.girl.isWatching)
 			{
 				this.callback("dying-state");
 			}
 			
-			if (this.player.heading != this.targetHeading)
+			if (this.player.isDead)
 			{
-				var delta:Number = this.player.heading - this.targetHeading;
-				var step:Number = delta / this.player.CurrentTurningSensitivity;
-				this.player.heading -= step;
-			}
-			
-			if (this.player.heading < Math.PI / 2 - Math.PI / 8)
-			{
-				spritemap.flipped = false;
-				spritemap.play("walk-side");
-			}
-			else if (this.player.heading > Math.PI / 2 + Math.PI / 8)
-			{
-				spritemap.flipped = true;
-				if (this.player.IsHappy)
-					spritemap.play("walk-side-happy");
-				else
-					spritemap.play("walk-side");
-			}
-			else if (spritemap.currentAnim != "walk-forward" && spritemap.currentAnim != "walk-forward-happy")
-			{
-				spritemap.flipped = false;
-				if (this.player.IsHappy)
-					spritemap.play("walk-side-happy");
-				else
-					spritemap.play("walk-side");
+				this.player.xVelocity = 0;
+				this.player.yVelocity = 0;
 			}
 		}
 		
 		private function processInput(spritemap:Spritemap):void
 		{
-			var dx:Number = Input.mouseX - this.player.centerX;
-			var dy:Number = Input.mouseY - this.player.centerY;
-			var theta:Number = Math.atan2(dy, dx);
-			this.targetHeading = theta;
+			if (Input.mouseDown)
+			{
+				var deltaX:Number = this.player.centerX - Input.mouseX;
+				if (deltaX < -10)
+				{
+					this.player.xVelocity = 5;
+					spritemap.flipped = false;
+					spritemap.play(this.player.IsHappy ? "walk-side-happy" : "walk-side");
+					this.player.heading = Math.PI / 2 - Math.PI / 4;
+					
+				}
+				else if (deltaX > 10)
+				{
+					this.player.xVelocity = -5;
+					spritemap.flipped = true;
+					spritemap.play(this.player.IsHappy ? "walk-side-happy" : "walk-side");
+					this.player.heading = Math.PI / 2 - Math.PI / 4;
+					this.player.heading = Math.PI / 2 + Math.PI / 4;
+				}
+				else
+				{
+					this.player.xVelocity = 0;
+					spritemap.play(this.player.IsHappy ? "walk-forward-happy" : "walk-forward");
+					this.player.heading = Math.PI / 2;
+				}
+			}
+			else
+			{
+				this.player.xVelocity = 0;
+				spritemap.play(this.player.IsHappy ? "walk-forward-happy" : "walk-forward");
+				this.player.heading = Math.PI / 2;
+			}
 		}
 	}
 

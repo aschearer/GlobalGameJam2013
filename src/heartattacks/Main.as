@@ -18,7 +18,7 @@ package heartattacks
 		public function Main():void 
 		{
 			super(800, 600, 60, false);
-			FP.world = new MenuState();
+			FP.world = new PlayState();
 		}
 	}
 }
