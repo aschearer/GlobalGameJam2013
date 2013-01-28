@@ -42,7 +42,7 @@ package heartattacks.doodads
 		private var girl:Girl;
 		private var heart:HeartMeter;
 		private var runTime:Number = 0;
-		private var timeTillBonusExpires:Number = 1;
+		private var timeTillBonusExpires:Number = 1.1;
 		private var states:StateMachine;
 	    public var distanceTraveled:Number;
 		private var arrow:Image;
@@ -65,7 +65,7 @@ package heartattacks.doodads
 			this.spritemap.add("stand-side", [1, 2, 3, 4, 5], 12, true);
 			this.spritemap.add("scared", [23, 24, 25, 26, 27, 28, 29, 30], 12, true);
 			this.spritemap.add("dying", [32, 33, 34, 35, 36, 37, 38, 39], 12, false);
-			this.spritemap.play("walk-forward");
+			this.spritemap.play("walk-forward-happy");
 			this.arrow = new Image(ArrowImage);
 			this.arrow.centerOrigin();
 			this.arrow.x = 60;

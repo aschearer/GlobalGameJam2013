@@ -42,7 +42,7 @@ package heartattacks.doodads.player
 			}
 			else
 			{
-				this.player.yVelocity = -1.5;
+				this.player.yVelocity = -2;
 			}
 			
 			
