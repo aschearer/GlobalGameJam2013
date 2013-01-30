@@ -4,6 +4,7 @@ package heartattacks
 	import flash.events.Event;
 	import heartattacks.states.MenuState;
 	import heartattacks.states.PlayState;
+	import heartattacks.states.IntroState;
 	import net.flashpunk.Engine;
 	import net.flashpunk.FP;
 	import net.flashpunk.utils.Key;
@@ -18,7 +19,7 @@ package heartattacks
 		public function Main():void 
 		{
 			super(800, 600, 60, false);
-			FP.world = new MenuState();
+			FP.world = new IntroState();
 		}
 	}
 }

@@ -31,6 +31,7 @@ package heartattacks.doodads
 		[Embed(source = "../../../res/Music/music_gameplay.mp3")] protected static const GAMEPLAY:Class;
 		[Embed(source = "../../../res/Music/music_intro.mp3")] protected static const INTRO:Class;
 		[Embed(source = "../../../res/Music/music_lobby.mp3")] protected static const LOBBY:Class;
+		[Embed(source = "../../../res/Music/intro_letter.mp3")] protected static const LETTER:Class;
 		
 		
 		public static var explosion:Sfx = new Sfx(EXPLOSION);
@@ -47,6 +48,7 @@ package heartattacks.doodads
 		public static var gameplay:Sfx = new Sfx(GAMEPLAY);
 		public static var intro:Sfx = new Sfx(INTRO);
 		public static var lobby:Sfx = new Sfx(LOBBY);
+		public static var letter:Sfx = new Sfx(LETTER);
 			
 		public function Music() 
 		{

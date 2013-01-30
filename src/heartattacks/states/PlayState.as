@@ -1,28 +1,31 @@
 
 package heartattacks.states 
 {
-	import heartattacks.doodads.Music;
-	import flash.net.SharedObject;
-	import heartattacks.doodads.ScoreBoard;
-	import heartattacks.TestingGui;
-	import net.flashpunk.*;
+	import com.bit101.components.Slider;
+	
 	import flash.events.Event;
 	import flash.geom.Point;
+	import flash.net.SharedObject;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
-	import heartattacks.doodads.HeartMeter;
-	import heartattacks.doodads.Player;
-	import heartattacks.doodads.Girl;
+	
 	import heartattacks.Level;
+	import heartattacks.TestingGui;
+	import heartattacks.doodads.Girl;
+	import heartattacks.doodads.HeartMeter;
+	import heartattacks.doodads.Music;
+	import heartattacks.doodads.Player;
+	import heartattacks.doodads.ScoreBoard;
+	
+	import net.flashpunk.*;
 	import net.flashpunk.Entity;
+	import net.flashpunk.FP;
+	import net.flashpunk.World;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.graphics.Tilemap;
 	import net.flashpunk.masks.Grid;
-	import net.flashpunk.World;
-	import net.flashpunk.FP;
 	import net.flashpunk.utils.*;
-	import com.bit101.components.Slider;
 	
 	
 	/**
@@ -77,6 +80,11 @@ package heartattacks.states
 			if (FP.camera.y >= 6000)
 			{
 				FP.camera.y = 0;
+			}
+			
+			if (this.level.player.y < -200)
+			{
+				FP.world = new Dead();
 			}
 				
 			if (this.level.player.distanceTraveled >= 8000)
